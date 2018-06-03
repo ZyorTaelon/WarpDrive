@@ -5,9 +5,9 @@ import cr0s.warpdrive.config.WarpDriveConfig;
 import cr0s.warpdrive.network.PacketHandler;
 import cr0s.warpdrive.render.EntityFXBeam;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -18,7 +18,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
-import net.minecraft.network.Packet;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -35,8 +34,8 @@ public class CloakedArea {
 	public BlockPos blockPosCore;
 	public int minX, minY, minZ;
 	public int maxX, maxY, maxZ;
-	private LinkedList<UUID> playersInArea;
-	public byte tier = 0;
+	private CopyOnWriteArraySet<UUID> playersInArea;
+	public byte tier;
 	public IBlockState blockStateFog;
 	
 	public CloakedArea(final World worldObj,
@@ -54,7 +53,7 @@ public class CloakedArea {
 		this.maxY = maxY;
 		this.maxZ = maxZ;
 		
-		this.playersInArea = new LinkedList<>();
+		this.playersInArea = new CopyOnWriteArraySet<>();
 		
 		if (worldObj != null) {
 			try {
@@ -75,29 +74,16 @@ public class CloakedArea {
 		}
 	}
 	
-	public boolean isPlayerListedInArea(final UUID uniqueId) {
-		for (UUID playerInArea : playersInArea) {
-			if (playerInArea.equals(uniqueId)) {
-				return true;
-			}
-		}
-		
-		return false;
+	public boolean isPlayerListedInArea(final UUID uuidPlayer) {
+		return playersInArea.contains(uuidPlayer);
 	}
 	
-	private void removePlayer(final UUID uniqueId) {
-		for (int i = 0; i < playersInArea.size(); i++) {
-			if (playersInArea.get(i).equals(uniqueId)) {
-				playersInArea.remove(i);
-				return;
-			}
-		}
+	private void removePlayer(final UUID uuidPlayer) {
+		playersInArea.remove(uuidPlayer);
 	}
 	
-	private void addPlayer(final UUID uniqueId) {
-		if (!isPlayerListedInArea(uniqueId)) {
-			playersInArea.add(uniqueId);
-		}
+	private void addPlayer(final UUID uuidPlayer) {
+		playersInArea.add(uuidPlayer);
 	}
 	
 	public boolean isEntityWithinArea(final EntityLivingBase entity) {
@@ -211,19 +197,11 @@ public class CloakedArea {
 		/**/
 	}
 	
-	public void revealEntitiesToPlayer(final EntityPlayer player) {
-		final List<Entity> list = player.worldObj.getEntitiesWithinAABBExcludingEntity(player, new AxisAlignedBB(minX, minY, minZ, maxX, maxY, maxZ));
+	public void revealEntitiesToPlayer(final EntityPlayerMP entityPlayerMP) {
+		final List<Entity> list = entityPlayerMP.worldObj.getEntitiesWithinAABBExcludingEntity(entityPlayerMP, new AxisAlignedBB(minX, minY, minZ, maxX, maxY, maxZ));
 		
 		for (final Entity entity : list) {
-			final Packet packet = PacketHandler.getPacketForThisEntity(entity);
-			if (packet != null) {
-				if (WarpDriveConfig.LOGGING_CLOAKING) {
-					WarpDrive.logger.warn("Revealing entity " + entity + " with packet " + packet);
-				}
-				((EntityPlayerMP) player).connection.sendPacket(packet);
-			} else if (WarpDriveConfig.LOGGING_CLOAKING) {
-				WarpDrive.logger.warn("Revealing entity " + entity + " fails: null packet");
-			}
+			PacketHandler.revealEntityToPlayer(entity, entityPlayerMP);
 		}
 	}
 	
@@ -261,8 +239,10 @@ public class CloakedArea {
 	@SideOnly(Side.CLIENT)
 	public void clientDecloak() {
 		final World world = Minecraft.getMinecraft().theWorld;
-		world.markBlockRangeForRenderUpdate(minX - 1, Math.max(0, minY - 1), minZ - 1, maxX + 1, Math.min(255, maxY + 1), maxZ + 1);
-
+		world.markBlockRangeForRenderUpdate(
+			minX - 1, Math.max(  0, minY - 1), minZ - 1,
+			maxX + 1, Math.min(255, maxY + 1), maxZ + 1);
+		
 		// Make some graphics
 		final int numLasers = 80 + world.rand.nextInt(50);
 		
@@ -284,7 +264,7 @@ public class CloakedArea {
 					centerY + radiusY * world.rand.nextGaussian(),
 					centerZ + radiusZ * world.rand.nextGaussian()),
 				world.rand.nextFloat(), world.rand.nextFloat(), world.rand.nextFloat(),
-				60 + world.rand.nextInt(60), 100));
+				60 + world.rand.nextInt(60)));
 		}
 	}
 	

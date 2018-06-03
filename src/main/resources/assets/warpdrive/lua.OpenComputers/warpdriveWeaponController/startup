@@ -221,8 +221,8 @@ function laser_battery_page()
     end
   end
   
-  w.setColorNormal()
   w.setCursorPos(1, 14)
+  w.setColorNormal()
   w.write("  -----------------------------------------------")
   w.setCursorPos(1, 16)
   w.write("   Firing mode: " .. data.laser_firingMode)
@@ -236,10 +236,10 @@ function laser_battery_page()
     w.write("off")
   end
   
-  w.setColorControl()
   w.setCursorPos(1, 19)
+  w.setColorControl()
   w.writeFullLine(" Add/Remove/Configure selected battery (A/R/C)")
-  w.writeFullLine(" select battery (Arrows), Link lasers (L)")
+  w.writeFullLine(" select battery (Up, Down), Link lasers (L)")
   w.writeFullLine(" change Firing mode (F), toggle Scatter mode (S)")
 end
 
@@ -249,8 +249,11 @@ function laser_battery_config()
     return
   end
   w.page_begin(w.data_getName() .. " - Laser battery configuration")
-  w.setColorNormal()
+  w.setCursorPos(1, 4)
+  w.setColorHelp()
+  w.writeFullLine(" Press enter to validate.")
   w.setCursorPos(1, 3)
+  w.setColorNormal()
   w.writeLn("Battery name (" .. laserbattery.name .. "):")
   laserbattery.name = w.input_readText(laserbattery.name)
   w.setCursorPos(1, 3)
@@ -261,8 +264,8 @@ function laser_battery_config()
   if laserbattery.head == nil then
     return
   end
-  w.setColorDisabled()
   w.setCursorPos(1, 4)
+  w.setColorDisabled()
   local headX, headY, headZ = laserbattery.head.position()
   local headFrequency = laserbattery.head.beamFrequency()
   w.write("@ " .. w.format_integer(headX, 7) .. " " .. w.format_integer(headY, 3) .. " " .. w.format_integer(headZ, 7))
@@ -270,12 +273,12 @@ function laser_battery_config()
   w.write("With " .. #laserbattery.boosters .. " boosters")
   
   w.setCursorPos(1, 8)
-  w.setColorDisabled()
-  w.write(" Valid values are 0 to 65000 ")
-  w.setColorNormal()
+  w.setColorHelp()
+  w.writeFullLine(" Enter a number between 0 and 65000.")
   local frequency
   repeat
     w.setCursorPos(1, 7)
+    w.setColorNormal()
     w.clearLine()
     w.write("Battery beam frequency (" .. w.format_integer(headFrequency, 5) .. "): ")
     frequency = w.input_readInteger(headFrequency)
@@ -304,12 +307,12 @@ function laser_battery_linkLasers()
   end
   w.page_begin(w.data_getName() .. " - Linking lasers")
   
-  w.setColorDisabled()
   w.setCursorPos(1, 3)
-  w.writeLn("Help: Use arrows to select lasers.")
-  w.writeLn("Press backspace/delete to remove laser.")
-  w.writeLn("Press enter to validate.")
-  w.writeLn("Validate with '-no laser-' to stop adding lasers.")
+  w.setColorHelp()
+  w.writeFullLine(" Use Up/Down/Left/Right to select lasers.")
+  w.writeFullLine(" Press backspace/delete to remove laser.")
+  w.writeFullLine(" Press enter to validate.")
+  w.writeFullLine(" Validate with '-no laser-' to stop adding lasers.")
   
   w.setColorNormal()
   if laserbattery.boosters == nil then
@@ -328,8 +331,8 @@ function laser_battery_linkLasers()
     w.writeLn("Laser head (" .. laserbattery.headAddress .. "): ")
   end
   laserbattery.headAddress = w.input_readEnum(laserbattery.headAddress, laserAddresses_left, laser_getName, laser_getDescription, "-no laser-")
-  w.setColorNormal()
   w.setCursorPos(1, 8)
+  w.setColorNormal()
   w.clearLine()
   if laserbattery.headAddress == nil then
     w.writeLn("Laser head set to (not defined)")
@@ -346,8 +349,8 @@ function laser_battery_linkLasers()
     w.writeLn("Laser head set to " .. laserbattery.headAddress)
     laserbattery.head = w.device_get(laserbattery.headAddress)
     
-    w.setColorDisabled()
     w.setCursorPos(1, 9)
+    w.setColorDisabled()
     local headX, headY, headZ = laserbattery.head.position()
     local headFrequency = laserbattery.head.beamFrequency()
     w.write("@ " .. w.format_integer(headX, 7) .. " " .. w.format_integer(headY, 3) .. " " .. w.format_integer(headZ, 7))
@@ -356,8 +359,8 @@ function laser_battery_linkLasers()
   local key = 1
   local addressCurrent = nil
   repeat
-    w.setColorNormal()
     w.setCursorPos(1, 10 + (key % 5))
+    w.setColorNormal()
     w.write("Booster #" .. key)
     addressCurrent = nil
     if key <= #laserbattery.boosterAddresses then
@@ -386,8 +389,8 @@ function laser_battery_linkLasers()
       
       laserbattery.boosterAddresses[key] = addressCurrent
       laserbattery.boosters[key] = w.device_get(addressCurrent)
-      w.setColorNormal()
       w.setCursorPos(1, 10 + (key % 5))
+      w.setColorNormal()
       w.clearLine()
       w.write("Booster #" .. key .. " set to " .. addressCurrent)
       key = key + 1
@@ -537,8 +540,8 @@ function laser_station_page()
     end
   end
   
-  w.setColorNormal()
   w.setCursorPos(1, 14)
+  w.setColorNormal()
   w.write("  -----------------------------------------------")
   w.setCursorPos(1, 16)
   w.write("   Firing mode: " .. data.laser_firingMode)
@@ -552,10 +555,10 @@ function laser_station_page()
     w.write("off")
   end
   
-  w.setColorControl()
   w.setCursorPos(1, 19)
+  w.setColorControl()
   w.writeFullLine(" Add/Remove/Configure laser station (A/R/C)")
-  w.writeFullLine(" select station (Arrows), Link batteries (L)")
+  w.writeFullLine(" select station (Up, Down), Link batteries (L)")
   w.writeFullLine(" change Firing mode (F), toggle Scatter mode (S)")
 end
 
@@ -565,8 +568,11 @@ function laser_station_config()
     return
   end
   w.page_begin(w.data_getName() .. " - Laser station configuration")
-  w.setColorNormal()
+  w.setCursorPos(1, 4)
+  w.setColorHelp()
+  w.writeFullLine(" Press enter to validate.")
   w.setCursorPos(1, 3)
+  w.setColorNormal()
   w.writeLn("Laser station name (" .. laserstation.name .. "):")
   laserstation.name = w.input_readText(laserstation.name)
   w.setCursorPos(1, 3)
@@ -585,13 +591,13 @@ function laser_station_config()
   w.write("With " .. #laserstation.batteries .. " batteries")
   
   w.setCursorPos(1, 8)
-  w.setColorDisabled()
-  w.write(" Valid values are 0 to 268435455 ")
-  w.setColorNormal()
+  w.setColorHelp()
+  w.writeFullLine(" Enter a number between 0 and 268435455.")
   local channel
   repeat
     w.setCursorPos(1, 7)
-    w.write("Camera video frequency (" .. w.format_integer(camVideoChannel, 5) .. "): ")
+    w.setColorNormal()
+    w.write("Camera video channel (" .. w.format_integer(camVideoChannel, 5) .. "): ")
     channel = w.input_readInteger(camVideoChannel)
     if channel ~= 0 and (channel < 0 or channel > 268435455) then
       w.status_showWarning("This is not a valid video channel. Try again.")
@@ -640,12 +646,12 @@ function laser_station_linkBatteries()
   end
   w.page_begin(w.data_getName() .. " - Linking batteries")
   
-  w.setColorDisabled()
   w.setCursorPos(1, 3)
-  w.writeLn("Instruction: use arrows to select batteries.")
-  w.writeLn("Press backspace/delete to remove battery.")
-  w.writeLn("Press enter to validate.")
-  w.writeLn("Validate '-no battery-' to stop adding batteries.")
+  w.setColorHelp()
+  w.writeFullLine(" Use Up/Down/Left/Right to select batteries.")
+  w.writeFullLine(" Press backspace/delete to remove battery.")
+  w.writeFullLine(" Press enter to validate.")
+  w.writeFullLine(" Validate '-no battery-' to stop adding batteries.")
   
   w.setColorNormal()
   if laserstation.batteries == nil then
@@ -666,12 +672,12 @@ function laser_station_linkBatteries()
   else
     laserstation.camera = w.device_get(laserstation.cameraAddress)
     
-    w.setColorNormal()
     w.setCursorPos(1, 8)
+    w.setColorNormal()
     w.clearLine()
     w.writeLn("Laser camera set to " .. laserstation.cameraAddress)
-    w.setColorDisabled()
     w.setCursorPos(1, 9)
+    w.setColorDisabled()
     w.clearLine()
     local camX, camY, camZ = laserstation.camera.position()
     local camVideoChannel = laserstation.camera.videoChannel()
@@ -685,8 +691,8 @@ function laser_station_linkBatteries()
     laser_batteries_left[keyBattery] = laserbattery
   end
   repeat
-    w.setColorNormal()
     w.setCursorPos(1, 10 + (key % 5))
+    w.setColorNormal()
     w.write("Battery #" .. key)
     nameCurrent = nil
     if key <= #laserstation.batteries then
@@ -713,8 +719,8 @@ function laser_station_linkBatteries()
       end
       
       laserstation.batteries[key] = { name = nameCurrent, enabled = true }
-      w.setColorNormal()
       w.setCursorPos(1, 10 + (key % 5))
+      w.setColorNormal()
       w.clearLine()
       w.write("Battery #" .. key .. " set to " .. nameCurrent)
       key = key + 1

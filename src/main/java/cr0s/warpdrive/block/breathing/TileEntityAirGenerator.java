@@ -150,7 +150,7 @@ public class TileEntityAirGenerator extends TileEntityAbstractEnergy {
 	@Callback
 	@Optional.Method(modid = "OpenComputers")
 	public Object[] enable(final Context context, final Arguments arguments) {
-			return enable(argumentsOCtoCC(arguments));
+		return enable(argumentsOCtoCC(arguments));
 	}
 	
 	// ComputerCraft IPeripheral methods implementation

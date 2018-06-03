@@ -2,10 +2,9 @@ package cr0s.warpdrive.world;
 
 import net.minecraft.world.biome.Biome;
 
-public class BiomeSpace extends Biome
-{
-    public BiomeSpace(final BiomeProperties biomeProperties)
-    {
+public class BiomeSpace extends Biome {
+	
+    public BiomeSpace(final BiomeProperties biomeProperties) {
         super(biomeProperties);
         this.theBiomeDecorator.treesPerChunk = 0;
         //this.temperature = 1F;
@@ -15,14 +14,12 @@ public class BiomeSpace extends Biome
     }
 
     @Override
-    public float getSpawningChance()
-    {
-        return 0;
+	public float getSpawningChance() {
+        return 0.0F;
     }
-    
-    @Override
-    public boolean getEnableSnow()
-    {
-        return false;
-    }
+	
+	@Override
+	public boolean getEnableSnow() {
+		return false;
+	}
 }

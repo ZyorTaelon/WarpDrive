@@ -351,7 +351,7 @@ public class WarpDriveConfig {
 	public static int IC2_REACTOR_COOLING_INTERVAL_TICKS = 10;
 	
 	// Transporter
-	public static int      TRANSPORTER_MAX_ENERGY_STORED = 2000000;
+	public static int      TRANSPORTER_MAX_ENERGY_STORED = 1000000;
 	public static int      TRANSPORTER_ENERGY_STORED_UPGRADE_BONUS = TRANSPORTER_MAX_ENERGY_STORED / 2;
 	public static int      TRANSPORTER_ENERGY_STORED_UPGRADE_MAX_QUANTITY = 8;
 	public static int      TRANSPORTER_SETUP_UPDATE_PARAMETERS_TICKS = 1 * 20;
@@ -361,7 +361,7 @@ public class WarpDriveConfig {
 	public static int      TRANSPORTER_RANGE_BASE_BLOCKS = 256;
 	public static int      TRANSPORTER_RANGE_UPGRADE_BLOCKS = 64;
 	public static int      TRANSPORTER_RANGE_UPGRADE_MAX_QUANTITY = 8;
-	public static double[] TRANSPORTER_LOCKING_ENERGY_FACTORS = { 50.0, 3.0, 0.0, 10.0, 1.0 / Math.sqrt(2.0) };
+	public static double[] TRANSPORTER_LOCKING_ENERGY_FACTORS = { 20.0, 3.0, 0.0, 10.0, 1.0 / Math.sqrt(2.0) };
 	public static double   TRANSPORTER_LOCKING_STRENGTH_FACTOR_PER_TICK = Math.pow(0.01D, 1.0D / 300.0D); // natural decay down to 1% over 300 ticks
 	public static double   TRANSPORTER_LOCKING_STRENGTH_IN_WILDERNESS = 0.25D;
 	public static double   TRANSPORTER_LOCKING_STRENGTH_AT_BEACON = 0.50D;
@@ -375,7 +375,7 @@ public class WarpDriveConfig {
 	public static int      TRANSPORTER_LOCKING_SPEED_OPTIMAL_TICKS = 5 * 20;
 	public static int      TRANSPORTER_LOCKING_UPGRADE_MAX_QUANTITY = 2;
 	public static int      TRANSPORTER_JAMMED_COOLDOWN_TICKS = 2 * 20;
-	public static double[] TRANSPORTER_ENERGIZING_ENERGY_FACTORS = { 10000.0, 5.0, 0.0, 10.0, 1.0 / Math.sqrt(2.0) };
+	public static double[] TRANSPORTER_ENERGIZING_ENERGY_FACTORS = { 10000.0, 1500.0, 0.0, 10.0, 1.0 / Math.sqrt(2.0) };
 	public static double   TRANSPORTER_ENERGIZING_MAX_ENERGY_FACTOR = 10.0D;
 	public static int      TRANSPORTER_ENERGIZING_FAILURE_MAX_DAMAGE = 5;
 	public static double   TRANSPORTER_ENERGIZING_SUCCESS_LOCK_BONUS = 0.20D;
@@ -556,7 +556,7 @@ public class WarpDriveConfig {
 		CelestialObjectManager.load(configDirectory);
 		
 		// read mod dependencies
-		isCoFHCoreLoaded = Loader.isModLoaded("cofhcore");
+		isCoFHCoreLoaded = Loader.isModLoaded("CoFHCore");
 		isComputerCraftLoaded = Loader.isModLoaded("ComputerCraft");
 		isEnderIOLoaded = Loader.isModLoaded("EnderIO");
 		

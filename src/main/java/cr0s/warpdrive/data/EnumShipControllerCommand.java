@@ -1,23 +1,45 @@
 package cr0s.warpdrive.data;
 
-public enum EnumShipControllerCommand {
+import javax.annotation.Nonnull;
+import java.util.HashMap;
+
+import net.minecraft.util.IStringSerializable;
+
+public enum EnumShipControllerCommand implements IStringSerializable {
 	
-	OFFLINE(0),      // Offline allows to move sub-ships
-	IDLE(1),
-	MANUAL(2),       // Move ship around including take off and landing
-	// AUTOPILOT(3), // Move ship towards a far destination
-	SUMMON(4),       // Summoning crew
-	HYPERDRIVE(5),   // Jump to/from Hyperspace
-	GATE(6),         // Jump via jumpgate
-	MAINTENANCE(7);  // Maintenance mode
+	OFFLINE     ("offline"),      // Offline allows to move sub-ships
+	IDLE        ("idle"),         //
+	MANUAL      ("manual"),       // Move ship around including take off and landing
+	// AUTOPILOT("autopilot"),    // Move ship towards a far destination
+	SUMMON      ("summon"),       // Summoning crew
+	HYPERDRIVE  ("hyperdrive"),   // Jump to/from Hyperspace
+	GATE        ("gate"),         // Jump via jumpgate
+	MAINTENANCE ("maintenance");  // Maintenance mode
 	
-	private final int code;
+	private final String name;
 	
-	EnumShipControllerCommand(final int code) {
-		this.code = code;
+	// cached values
+	public static final int length;
+	private static final HashMap<Integer, EnumShipControllerCommand> ID_MAP = new HashMap<>();
+	
+	static {
+		length = EnumShipControllerCommand.values().length;
+		for (final EnumShipControllerCommand forceFieldShape : values()) {
+			ID_MAP.put(forceFieldShape.ordinal(), forceFieldShape);
+		}
 	}
 	
-	public int getCode() {
-		return code;
+	EnumShipControllerCommand(final String name) {
+		this.name = name;
+	}
+	
+	public static EnumShipControllerCommand get(final int damage) {
+		return ID_MAP.get(damage);
+	}
+	
+	@Nonnull
+	@Override
+	public String getName() {
+		return name;
 	}
 }

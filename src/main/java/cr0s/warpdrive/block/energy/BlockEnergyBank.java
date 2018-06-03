@@ -226,16 +226,16 @@ public class BlockEnergyBank extends BlockAbstractContainer implements IExplosio
 			switch (tileEntityEnergyBank.getMode(side)) {
 			case INPUT:
 				Commons.addChatMessage(entityPlayer, Commons.getChatPrefix(itemStack)
-				                                            .appendSibling(new TextComponentTranslation("warpdrive.energy.side.changedToInput", side.name())));
+				                                            .appendSibling(new TextComponentTranslation("warpdrive.energy.side.changed_to_input", side.name())));
 				return true;
 			case OUTPUT:
 				Commons.addChatMessage(entityPlayer, Commons.getChatPrefix(itemStack)
-				                                            .appendSibling(new TextComponentTranslation("warpdrive.energy.side.changedToOutput", side.name())));
+				                                            .appendSibling(new TextComponentTranslation("warpdrive.energy.side.changed_to_output", side.name())));
 				return true;
 			case DISABLED:
 			default:
 				Commons.addChatMessage(entityPlayer, Commons.getChatPrefix(itemStack)
-				                                            .appendSibling(new TextComponentTranslation("warpdrive.energy.side.changedToDisabled", side.name())));
+				                                            .appendSibling(new TextComponentTranslation("warpdrive.energy.side.changed_to_disabled", side.name())));
 				return true;
 			}
 		}

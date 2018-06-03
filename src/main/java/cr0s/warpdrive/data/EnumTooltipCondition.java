@@ -13,10 +13,10 @@ public enum EnumTooltipCondition implements IStringSerializable {
 	CREATIVE_ONLY     ("creative_only"    ),
 	ALWAYS            ("always"           );
 	
-	public final String unlocalizedName;
+	public final String name;
 	
-	EnumTooltipCondition(final String unlocalizedName) {
-		this.unlocalizedName = unlocalizedName;
+	EnumTooltipCondition(final String name) {
+		this.name = name;
 	}
 	
 	public boolean isEnabled(final boolean isSneaking, final boolean isCreativeMode) {
@@ -30,14 +30,9 @@ public enum EnumTooltipCondition implements IStringSerializable {
 		}
 	}
 	
-	@Override
-	public String toString() {
-		return unlocalizedName;
-	}
-	
 	@Nonnull
 	@Override
-	public String getName() { return unlocalizedName; }
+	public String getName() { return name; }
 	
 	public static String formatAllValues() {
 		final StringBuilder result = new StringBuilder();

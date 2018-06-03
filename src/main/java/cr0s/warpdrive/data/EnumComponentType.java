@@ -1,8 +1,12 @@
 package cr0s.warpdrive.data;
 
+import net.minecraft.util.IStringSerializable;
+
+import javax.annotation.Nonnull;
 import java.util.HashMap;
 
-public enum EnumComponentType {
+public enum EnumComponentType implements IStringSerializable {
+	
 	EMERALD_CRYSTAL            ("emerald_crystal"),
 	ENDER_CRYSTAL              ("ender_crystal"),
 	DIAMOND_CRYSTAL            ("diamond_crystal"),
@@ -25,7 +29,7 @@ public enum EnumComponentType {
 	ELECTROMAGNETIC_PROJECTOR  ("electromagnetic_projector"),
 	SUPERCONDUCTOR             ("superconductor");
 	
-	private final String unlocalizedName;
+	private final String name;
 	
 	// cached values
 	public static final int length;
@@ -38,15 +42,17 @@ public enum EnumComponentType {
 		}
 	}
 	
-	EnumComponentType(final String unlocalizedName) {
-		this.unlocalizedName = unlocalizedName;
+	EnumComponentType(final String name) {
+		this.name = name;
 	}
 	
 	public static EnumComponentType get(final int damage) {
 		return ID_MAP.get(damage);
 	}
-
-	public String getUnlocalizedName() {
-		return unlocalizedName;
+	
+	@Nonnull
+	@Override
+	public String getName() {
+		return name;
 	}
 }

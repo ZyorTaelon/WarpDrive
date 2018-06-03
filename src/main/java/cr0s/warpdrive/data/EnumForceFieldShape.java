@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum EnumForceFieldShape implements IStringSerializable, IForceFieldShape {
+	
 	NONE               ("none"),
 	SPHERE             ("sphere"),
 	CYLINDER_H         ("cylinder_h"),
@@ -37,14 +38,14 @@ public enum EnumForceFieldShape implements IStringSerializable, IForceFieldShape
 		this.name = name;
 	}
 	
+	public static EnumForceFieldShape get(final int damage) {
+		return ID_MAP.get(damage);
+	}
+	
 	@Nonnull
 	@Override
 	public String getName() {
 		return name;
-	}
-	
-	public static EnumForceFieldShape get(final int damage) {
-		return ID_MAP.get(damage);
 	}
 	
 	@Override
@@ -86,9 +87,9 @@ public enum EnumForceFieldShape implements IStringSerializable, IForceFieldShape
 			default:
 				sizeEstimation = 8;
 				WarpDrive.logger.error(String.format("Invalid object %s for shape %s with size %s. Please report this to the mod author",
-				                                    this,
-				                                    name,
-				                                    vScale));
+				                                     this,
+				                                     name,
+				                                     vScale));
 				break;
 			}
 		} else {

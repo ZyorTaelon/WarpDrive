@@ -75,8 +75,8 @@ public class TileEntityAbstractForceField extends TileEntityAbstractEnergy imple
 	
 	@Override
 	public void invalidate() {
-		super.invalidate();
 		ForceFieldRegistry.removeFromRegistry(this);
+		super.invalidate();
 	}
 	
 	@Override

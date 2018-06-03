@@ -8,6 +8,7 @@ import cr0s.warpdrive.data.VectorI;
 import cr0s.warpdrive.world.SpaceTeleporter;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.command.EntitySelector;
 import net.minecraft.command.ICommandSender;
@@ -55,10 +56,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 
 /**
  * Common static methods
@@ -694,6 +700,40 @@ public class Commons {
 		final Vec3d vec3Look = entityPlayer.getLook(1.0F);
 		final Vec3d vec3Target = vec3Position.addVector(vec3Look.xCoord * distance, vec3Look.yCoord * distance, vec3Look.zCoord * distance);
 		return world.rayTraceBlocks(vec3Position, vec3Target, false, false, true);
+	}
+	
+	// Fluid registry fix
+	// As of MC1.7.10 CoFH is remapping blocks without updating the fluid registry
+	// This imply that call to FluidRegistry.lookupFluidForBlock() for Water and Lava will return null
+	// We're remapping it using unlocalized names, since those don't change
+	private static HashMap<String, Fluid> fluidByBlockName;
+	
+	public static Fluid fluid_getByBlock(final Block block) {
+		// validate context
+		if (!(block instanceof BlockLiquid)) {
+//			if (WarpDrive.isDev) {
+				WarpDrive.logger.warn(String.format("Invalid lookup for fluid block not derived from BlockLiquid %s",
+				                      block));
+//			}
+			return null;
+		}
+		
+		//  build cache on first call
+		if (fluidByBlockName == null) {
+			final Map<String, Fluid> fluidsRegistry = FluidRegistry.getRegisteredFluids();
+			final HashMap<String, Fluid> map = new HashMap<>(100);
+			
+			fluidByBlockName = map;
+			for (final Fluid fluid : fluidsRegistry.values()) {
+				final Block blockFluid = fluid.getBlock();
+				if (blockFluid != null) {
+					map.put(blockFluid.getUnlocalizedName(), fluid);
+				}
+			}
+			fluidByBlockName = map;
+		}
+		// final Fluid fluid = FluidRegistry.lookupFluidForBlock(blockState.getBlock()); @TODO MC1.10 fluid detection
+		return fluidByBlockName.get(block.getUnlocalizedName());
 	}
 	
 	public static EnumFacing getDirection(final int index) {

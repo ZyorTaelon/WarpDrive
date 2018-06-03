@@ -13,10 +13,17 @@ import java.util.Collection;
 import java.util.List;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EntityTrackerEntry;
+import net.minecraft.entity.ai.attributes.AttributeMap;
+import net.minecraft.entity.ai.attributes.IAttributeInstance;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.Packet;
-import net.minecraft.server.MinecraftServer;
+import net.minecraft.network.play.server.*;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -59,7 +66,7 @@ public class PacketHandler {
 	                                  final int age, final int energy, final int radius) {
 		assert(!world.isRemote);
 		
-		final MessageBeamEffect messageBeamEffect = new MessageBeamEffect(v3Source, v3Target, red, green, blue, age, energy);
+		final MessageBeamEffect messageBeamEffect = new MessageBeamEffect(v3Source, v3Target, red, green, blue, age);
 		
 		// small beam are sent relative to beam center
 		if (v3Source.distanceTo_square(v3Target) < 3600 /* 60 * 60 */) {
@@ -84,10 +91,10 @@ public class PacketHandler {
 	
 	public static void sendBeamPacketToPlayersInArea(final World world, final Vector3 source, final Vector3 target,
 	                                                 final float red, final float green, final float blue,
-	                                                 final int age, final int energy, final AxisAlignedBB aabb) {
+	                                                 final int age, final AxisAlignedBB aabb) {
 		assert(!world.isRemote);
 		
-		final MessageBeamEffect messageBeamEffect = new MessageBeamEffect(source, target, red, green, blue, age, energy);
+		final MessageBeamEffect messageBeamEffect = new MessageBeamEffect(source, target, red, green, blue, age);
 		// Send packet to all players within cloaked area
 		final List<Entity> list = world.getEntitiesWithinAABB(EntityPlayerMP.class, aabb);
 		for (final Entity entity : list) {
@@ -190,6 +197,70 @@ public class PacketHandler {
 		} catch (final Exception exception) {
 			exception.printStackTrace();
 		}
+		WarpDrive.logger.error(String.format("Unable to get packet for entity %s",
+		                                     entity));
 		return null;
+	}
+	
+	public static void revealEntityToPlayer(final Entity entity, final EntityPlayerMP entityPlayerMP) {
+		try {
+			final Packet packet = getPacketForThisEntity(entity);
+			if (packet == null) {
+				WarpDrive.logger.error(String.format("Unable to reveal entity %s to player %s: null packet",
+					entity, entityPlayerMP));
+				return;
+			}
+			if (WarpDriveConfig.LOGGING_CLOAKING) {
+				WarpDrive.logger.info("Revealing entity " + entity + " with packet " + packet);
+			}
+			entityPlayerMP.connection.sendPacket(packet);
+			
+			if (!entity.getDataManager().isEmpty()) {
+				entityPlayerMP.connection.sendPacket(new SPacketEntityMetadata(entity.getEntityId(), entity.getDataManager(), true));
+			}
+			
+			if (entity instanceof EntityLivingBase) {
+				final AttributeMap attributemap = (AttributeMap) ((EntityLivingBase) entity).getAttributeMap();
+				final Collection<IAttributeInstance> collection = attributemap.getWatchedAttributes();
+				
+				if (!collection.isEmpty()) {
+					entityPlayerMP.connection.sendPacket(new SPacketEntityProperties(entity.getEntityId(), collection));
+				}
+				
+				// if (((EntityLivingBase)this.trackedEntity).isElytraFlying()) ... (we always send velocity information)
+			}
+			
+			if (!(packet instanceof SPacketSpawnMob)) {
+				entityPlayerMP.connection.sendPacket(new SPacketEntityVelocity(entity.getEntityId(), entity.motionX, entity.motionY, entity.motionZ));
+			}
+			
+			if (entity instanceof EntityLivingBase) {
+				for (EntityEquipmentSlot entityequipmentslot : EntityEquipmentSlot.values()) {
+					final ItemStack itemstack = ((EntityLivingBase) entity).getItemStackFromSlot(entityequipmentslot);
+					
+					if (itemstack != null) {
+						entityPlayerMP.connection.sendPacket(new SPacketEntityEquipment(entity.getEntityId(), entityequipmentslot, itemstack));
+					}
+				}
+			}
+			
+			if (entity instanceof EntityPlayer) {
+				final EntityPlayer entityplayer = (EntityPlayer) entity;
+				
+				if (entityplayer.isPlayerSleeping()) {
+					entityPlayerMP.connection.sendPacket(new SPacketUseBed(entityplayer, new BlockPos(entity)));
+				}
+			}
+			
+			if (entity instanceof EntityLivingBase) {
+				final EntityLivingBase entitylivingbase = (EntityLivingBase) entity;
+				
+				for (final PotionEffect potioneffect : entitylivingbase.getActivePotionEffects()) {
+					entityPlayerMP.connection.sendPacket(new SPacketEntityEffect(entity.getEntityId(), potioneffect));
+				}
+			}
+		} catch (final Exception exception) {
+			exception.printStackTrace();
+		}
 	}
 }

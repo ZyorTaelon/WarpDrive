@@ -97,9 +97,6 @@ public class TileEntityCloakingCore extends TileEntityAbstractEnergy {
 		
 		updateTicks--;
 		if (updateTicks <= 0) {
-			if (WarpDriveConfig.LOGGING_CLOAKING) {
-				WarpDrive.logger.info(this + " Updating cloaking state...");
-			}
 			updateTicks = ((tier == 1) ? 20 : (tier == 2) ? 10 : 20) * WarpDriveConfig.CLOAKING_FIELD_REFRESH_INTERVAL_SECONDS; // resetting timer
 			
 			isRefreshNeeded = validateAssembly();
@@ -141,9 +138,7 @@ public class TileEntityCloakingCore extends TileEntityAbstractEnergy {
 						if (area != null) {
 							area.sendCloakPacketToPlayersEx(false); // re-cloak field
 						} else {
-							if (WarpDriveConfig.LOGGING_CLOAKING) {
-								WarpDrive.logger.info("getCloakedArea1 returned null for " + worldObj + " " + pos.getX() + " " + pos.getY() + " " + pos.getZ());
-							}
+							WarpDrive.logger.error("getCloakedArea1 returned null for " + worldObj + " " + pos.getX() + " " + pos.getY() + " " + pos.getZ());
 						}
 						
 					} else {// enabled, not cloaking and not able to
@@ -162,15 +157,19 @@ public class TileEntityCloakingCore extends TileEntityAbstractEnergy {
 						
 					} else {// enabled, cloaking and valid
 						if (hasEnoughPower) {// enabled, cloaking and able to
+							if (isRefreshNeeded) {
+								WarpDrive.cloaks.updateCloakedArea(worldObj,
+										worldObj.provider.getDimension(), pos, tier,
+										minX, minY, minZ, maxX, maxY, maxZ);
+							}
+							
 							// IDLE
 							// Refresh the field (workaround to re-synchronize players since client may 'eat up' the packets)
 							final CloakedArea area = WarpDrive.cloaks.getCloakedArea(worldObj, pos);
 							if (area != null) {
 								area.sendCloakPacketToPlayersEx(false); // re-cloak field
 							} else {
-								if (WarpDriveConfig.LOGGING_CLOAKING) {
-									WarpDrive.logger.info("getCloakedArea2 returned null for " + worldObj + " " + pos.getX() + " " + pos.getY() + " " + pos.getZ());
-								}
+								WarpDrive.logger.error("getCloakedArea2 returned null for " + worldObj + " " + pos.getX() + " " + pos.getY() + " " + pos.getZ());
 							}
 							setCoilsState(true);
 							
@@ -252,8 +251,9 @@ public class TileEntityCloakingCore extends TileEntityAbstractEnergy {
 				                   pos.getX() + 0.5D + distanceOuterCoils_blocks[direction.ordinal()] * direction.getFrontOffsetX(),
 				                   pos.getY() + 0.5D + distanceOuterCoils_blocks[direction.ordinal()] * direction.getFrontOffsetY(),
 				                   pos.getZ() + 0.5D + distanceOuterCoils_blocks[direction.ordinal()] * direction.getFrontOffsetZ()),
-				        r, g, b, LASER_DURATION_TICKS, 0,
-						new AxisAlignedBB(minX, minY, minZ, maxX, maxY, maxZ));
+				        r, g, b,
+				        LASER_DURATION_TICKS,
+				    		new AxisAlignedBB(minX, minY, minZ, maxX, maxY, maxZ));
 			}
 		}
 		
@@ -282,7 +282,8 @@ public class TileEntityCloakingCore extends TileEntityAbstractEnergy {
 						pos.getX() + 0.5D + (DISTANCE_INNER_COILS_BLOCKS + 0.3D) * stop .getFrontOffsetX() + 0.2D * start.getFrontOffsetX(),
 						pos.getY() + 0.5D + (DISTANCE_INNER_COILS_BLOCKS + 0.3D) * stop .getFrontOffsetY() + 0.2D * start.getFrontOffsetY(),
 						pos.getZ() + 0.5D + (DISTANCE_INNER_COILS_BLOCKS + 0.3D) * stop .getFrontOffsetZ() + 0.2D * start.getFrontOffsetZ()),
-					r, g, b, LASER_DURATION_TICKS, 0,
+					r, g, b,
+					LASER_DURATION_TICKS,
 					new AxisAlignedBB(minX, minY, minZ, maxX, maxY, maxZ));
 			}
 		}
@@ -422,13 +423,13 @@ public class TileEntityCloakingCore extends TileEntityAbstractEnergy {
 		// build status message
 		final float integrity = countIntegrity / 13.0F; 
 		if (messageInnerCoils.length() > 0 && messageOuterCoils.length() > 0) {
-			messageValidityIssues = new TextComponentTranslation("warpdrive.cloaking_core.missingInnerAndOuter", 
+			messageValidityIssues = new TextComponentTranslation("warpdrive.cloaking_core.missing_channeling_and_projecting_coils",
 					Math.round(100.0F * integrity), messageInnerCoils, messageOuterCoils).toString(); 
 		} else if (messageInnerCoils.length() > 0) {
-			messageValidityIssues = new TextComponentTranslation("warpdrive.cloaking_core.missingInner",
+			messageValidityIssues = new TextComponentTranslation("warpdrive.cloaking_core.missing_channeling_coils",
 			        Math.round(100.0F * integrity), messageInnerCoils).toString();
 		} else if (messageOuterCoils.length() > 0) {
-			messageValidityIssues = new TextComponentTranslation("warpdrive.cloaking_core.missingOuter",
+			messageValidityIssues = new TextComponentTranslation("warpdrive.cloaking_core.missing_projecting_coils",
 					Math.round(100.0F * integrity), messageOuterCoils).toString();
 		} else {
 			messageValidityIssues = new TextComponentTranslation("warpdrive.cloaking_core.valid").toString();
@@ -458,7 +459,7 @@ public class TileEntityCloakingCore extends TileEntityAbstractEnergy {
 		} else if (!isEnabled) {
 			unlocalizedStatus = "warpdrive.cloaking_core.disabled";
 		} else if (!isCloaking) {
-			unlocalizedStatus = "warpdrive.cloaking_core.lowPower";
+			unlocalizedStatus = "warpdrive.cloaking_core.low_power";
 		} else {
 			unlocalizedStatus = "warpdrive.cloaking_core.cloaking";
 		}

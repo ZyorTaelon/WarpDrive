@@ -16,7 +16,7 @@ public class ItemBlockDecorative extends ItemBlockAbstractBase {
 	public ItemBlockDecorative(Block block) {
 		super(block);
 		setHasSubtypes(true);
-		setUnlocalizedName("warpdrive.decoration");
+		setUnlocalizedName("warpdrive.decoration.decorative");
 	}
 	
 	@Nonnull
@@ -28,7 +28,7 @@ public class ItemBlockDecorative extends ItemBlockAbstractBase {
 			throw new IllegalArgumentException(String.format("Invalid damage %d for %s", damage, itemStack.getItem()));
 		}
 		ResourceLocation resourceLocation = getRegistryName();
-		String variant = String.format("type=%s", EnumDecorativeType.get( itemStack.getItemDamage() ).getUnlocalizedName());
+		String variant = String.format("type=%s", EnumDecorativeType.get( itemStack.getItemDamage() ).getName());
 		return new ModelResourceLocation(resourceLocation, variant);
 	}
 	
@@ -38,6 +38,6 @@ public class ItemBlockDecorative extends ItemBlockAbstractBase {
 		if (itemStack == null) {
 			return getUnlocalizedName();
 		}
-		return "tile.warpdrive.decoration.decorative." + EnumDecorativeType.get(itemStack.getItemDamage()).getUnlocalizedName();
+		return "tile.warpdrive.decoration.decorative." + EnumDecorativeType.get(itemStack.getItemDamage()).getName();
 	}
 }

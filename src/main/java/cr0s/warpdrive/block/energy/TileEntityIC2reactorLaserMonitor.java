@@ -190,14 +190,13 @@ public class TileEntityIC2reactorLaserMonitor extends TileEntityAbstractLaser {
 			return super.getStatus();
 		}
 		
-		final IReactor reactor = findReactor();
-		if (reactor != null) {
+		if (facing != null) {
 			return super.getStatus() 
-					.appendSibling(new TextComponentTranslation("warpdrive.ic2_reactor_laser_monitor.multipleReactors",
-						1));
+					.appendSibling(new TextComponentTranslation("warpdrive.ic2_reactor_laser_monitor.reactor_found",
+						facing.name().toLowerCase()));
 		} else {
 			return super.getStatus()
-					.appendSibling(new TextComponentTranslation("warpdrive.ic2_reactor_laser_monitor.noReactor"));
+					.appendSibling(new TextComponentTranslation("warpdrive.ic2_reactor_laser_monitor.no_reactor"));
 		}
 	}
 }

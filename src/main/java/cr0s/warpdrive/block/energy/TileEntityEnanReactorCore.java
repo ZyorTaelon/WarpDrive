@@ -155,7 +155,7 @@ public class TileEntityEnanReactorCore extends TileEntityAbstractEnergy implemen
 		}
 	}
 	
-	public void decreaseInstability(final EnumReactorFace reactorFace, final int energy) {
+	void decreaseInstability(final EnumReactorFace reactorFace, final int energy) {
 		if (reactorFace.indexStability < 0) {
 			return;
 		}
@@ -191,8 +191,6 @@ public class TileEntityEnanReactorCore extends TileEntityAbstractEnergy implemen
 		}
 		
 		instabilityValues[indexStability] = Math.max(0, instabilityValues[indexStability] - amountToRemove);
-		
-		updateMetadata();
 	}
 	
 	private void generateEnergy() {
@@ -315,10 +313,10 @@ public class TileEntityEnanReactorCore extends TileEntityAbstractEnergy implemen
 		final int instabilityNibble = (int) Math.max(0, Math.min(3, Math.round(maxInstability / 25.0D)));
 		final int energyNibble = (int) Math.max(0, Math.min(3, Math.round(4.0D * containedEnergy / WarpDriveConfig.ENAN_REACTOR_MAX_ENERGY_STORED)));
 		
-		final int metadata = 4 * instabilityNibble + energyNibble;
-		if (getBlockMetadata() != metadata) {
-			updateMetadata(metadata);
-		}
+		final IBlockState blockStateNew = blockType.getDefaultState()
+		                                           .withProperty(BlockEnanReactorCore.ENERGY, energyNibble)
+		                                           .withProperty(BlockEnanReactorCore.INSTABILITY, instabilityNibble);
+		updateBlockState(null, blockStateNew);
 	}
 	
 	@Override

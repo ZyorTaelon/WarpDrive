@@ -1548,8 +1548,8 @@ function radar_key(keycode)
     radar_drawMap()
     return true
   elseif keycode == 199 then -- home
-    data.radar_offsetX = 0;
-    data.radar_offsetY = 0;
+    data.radar_offsetX = 0
+    data.radar_offsetY = 0
     data.radar_scale = 20
     for i = 0, #data.radar_results - 1 do
       data.radar_scale = math.max(data.radar_scale, math.max(math.abs(radar_x - data.radar_results[i].x), math.abs(radar_z - data.radar_results[i].z)))
@@ -1559,22 +1559,22 @@ function radar_key(keycode)
     radar_drawMap()
     return true
   elseif keycode == 203 then -- left
-    data.radar_offsetX = data.radar_offsetX - 0.20 * data.radar_scale;
+    data.radar_offsetX = data.radar_offsetX - 0.20 * data.radar_scale
     data_save()
     radar_drawMap()
     return true
   elseif keycode == 205 then -- right
-    data.radar_offsetX = data.radar_offsetX + 0.20 * data.radar_scale;
+    data.radar_offsetX = data.radar_offsetX + 0.20 * data.radar_scale
     data_save()
     radar_drawMap()
     return true
   elseif keycode == 200 then -- up
-    data.radar_offsetY = data.radar_offsetY - 0.20 * data.radar_scale;
+    data.radar_offsetY = data.radar_offsetY - 0.20 * data.radar_scale
     data_save()
     radar_drawMap()
     return true
   elseif keycode == 208 then -- down
-    data.radar_offsetY = data.radar_offsetY + 0.20 * data.radar_scale;
+    data.radar_offsetY = data.radar_offsetY + 0.20 * data.radar_scale
     data_save()
     radar_drawMap()
     return true
@@ -1742,7 +1742,7 @@ function radar_scan()
 end
 
 function radar_scanDone()
-  local numResults = radar.getResultsCount();
+  local numResults = radar.getResultsCount()
   data.radar_results = {}
   if (numResults ~= 0) then
     for i = 0, numResults do
@@ -1785,14 +1785,14 @@ function draw_warning(monitor, text)
   else
     screenWidth, screenHeight = monitor.getSize()
   end
-  local centerX = math.floor(screenWidth / 2);
-  local centerY = math.floor(screenHeight / 2);
-  local halfWidth = math.ceil(string.len(text) / 2);
+  local centerX = math.floor(screenWidth / 2)
+  local centerY = math.floor(screenHeight / 2)
+  local halfWidth = math.ceil(string.len(text) / 2)
   local blank = string.sub("                              ", - (string.len(text) + 2))
 
-  draw_text(monitor, centerX - halfWidth - 1, centerY - 1, blank, colors.white, colors.red);
-  draw_text(monitor, centerX - halfWidth - 1, centerY    , " " .. text .. " ", colors.white, colors.red);
-  draw_text(monitor, centerX - halfWidth - 1, centerY + 1, blank, colors.white, colors.red);
+  draw_text(monitor, centerX - halfWidth - 1, centerY - 1, blank, colors.white, colors.red)
+  draw_text(monitor, centerX - halfWidth - 1, centerY    , " " .. text .. " ", colors.white, colors.red)
+  draw_text(monitor, centerX - halfWidth - 1, centerY + 1, blank, colors.white, colors.red)
 end
 
 function draw_centeredText(monitor, y, text)
@@ -1802,9 +1802,9 @@ function draw_centeredText(monitor, y, text)
   else
     screenWidth, screenHeight = monitor.getSize()
   end
-  local x = math.floor(screenWidth / 2 - string.len(text) / 2 + 0.5);
+  local x = math.floor(screenWidth / 2 - string.len(text) / 2 + 0.5)
 
-  draw_text(monitor, x, y, text, nil, nil);
+  draw_text(monitor, x, y, text, nil, nil)
 end
 
 function radar_drawContact(monitor, contact)
@@ -1918,7 +1918,7 @@ function radar_timerEvent()
     radar_waitingNextScan = false
     radar_scan() -- will restart timer
   else
-    local numResults = radar.getResultsCount();
+    local numResults = radar.getResultsCount()
     if numResults ~= -1 then
       radar_scanDone()
       if data.radar_autoscan then
@@ -1978,7 +1978,7 @@ for key,side in pairs(sides) do
     table.insert(cloakingcores, peripheral.wrap(side))
   elseif componentType == "warpdriveRadar" then
     Write("wrapping!")
-    radar = peripheral.wrap(side);
+    radar = peripheral.wrap(side)
   elseif componentType == "monitor" then
     Write("wrapping!")
     lmonitor = peripheral.wrap(side)

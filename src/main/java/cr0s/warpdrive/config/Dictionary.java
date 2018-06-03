@@ -3,7 +3,6 @@ package cr0s.warpdrive.config;
 import cr0s.warpdrive.WarpDrive;
 import cr0s.warpdrive.block.BlockAbstractBase;
 import cr0s.warpdrive.block.BlockAbstractContainer;
-import cr0s.warpdrive.block.forcefield.BlockForceFieldProjector;
 import cr0s.warpdrive.block.hull.BlockHullGlass;
 import cr0s.warpdrive.block.hull.BlockHullSlab;
 import cr0s.warpdrive.block.hull.BlockHullStairs;
@@ -514,12 +513,13 @@ public class Dictionary {
 		for (final ResourceLocation resourceLocation : Block.REGISTRY.getKeys()) {
 			final Block block = Block.REGISTRY.getObject(resourceLocation);
 			WarpDrive.logger.debug("Checking block registry for '" + resourceLocation + "': " + block);
+			
 			// get hardness and blast resistance
 			float hardness = -2.0F;
 			if (WarpDrive.fieldBlockHardness != null) {
 				// WarpDrive.fieldBlockHardness.setAccessible(true);
 				try {
-					hardness = (float)WarpDrive.fieldBlockHardness.get(block);
+					hardness = (float) WarpDrive.fieldBlockHardness.get(block);
 				} catch (final IllegalArgumentException | IllegalAccessException exception) {
 					exception.printStackTrace();
 					WarpDrive.logger.error("Unable to access block hardness value '" + resourceLocation + "' " + block);

@@ -108,11 +108,15 @@ public abstract class BlockAbstractBase extends Block implements IBlockBase {
 		default: return rarity;
 		}
 	}
-		
-	public static EnumFacing getFacingFromEntity(BlockPos clickedBlock, EntityLivingBase entity) {
-		return EnumFacing.getFacingFromVector(
-		(float) (entity.posX - clickedBlock.getX()),
-		(float) (entity.posY - clickedBlock.getY()),
-		(float) (entity.posZ - clickedBlock.getZ()));
+	
+	public static EnumFacing getFacingFromEntity(final BlockPos clickedBlock, final EntityLivingBase entityLivingBase) {
+		final EnumFacing facing = EnumFacing.getFacingFromVector(
+				(float) (entityLivingBase.posX - clickedBlock.getX()),
+				(float) (entityLivingBase.posY - clickedBlock.getY()),
+				(float) (entityLivingBase.posZ - clickedBlock.getZ()) );
+		if (entityLivingBase.isSneaking()) {
+			return facing.getOpposite();
+		}
+		return facing;
 	}
 }

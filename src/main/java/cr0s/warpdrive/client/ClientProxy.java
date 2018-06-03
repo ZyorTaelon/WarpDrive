@@ -21,6 +21,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
+import net.minecraftforge.common.MinecraftForge;
 
 public class ClientProxy extends CommonProxy {
 	
@@ -31,8 +32,8 @@ public class ClientProxy extends CommonProxy {
 		ModelLoaderRegistry.registerLoader(MyCustomModelLoader.INSTANCE);
 		
 		// blocks
-		// IModelInitialisation(WarpDrive.blockShipCore);
-		// IModelInitialisation(WarpDrive.blockShipController);
+		IModelInitialisation(WarpDrive.blockShipCore);
+		IModelInitialisation(WarpDrive.blockShipController);
 		IModelInitialisation(WarpDrive.blockRadar);
 		IModelInitialisation(WarpDrive.blockWarpIsolation);
 		
@@ -70,8 +71,8 @@ public class ClientProxy extends CommonProxy {
 		if (WarpDriveConfig.isIndustrialCraft2Loaded) {
 			IModelInitialisation(WarpDrive.blockIC2reactorLaserMonitor);
 		}
-		// IModelInitialisation(WarpDrive.blockEnanReactorCore);
-		// IModelInitialisation(WarpDrive.blockEnanReactorLaser);
+		IModelInitialisation(WarpDrive.blockEnanReactorCore);
+		IModelInitialisation(WarpDrive.blockEnanReactorLaser);
 		IModelInitialisation(WarpDrive.blockEnergyBank);
 		IModelInitialisation(WarpDrive.blockGas);
 		IModelInitialisation(WarpDrive.blockIridium);
@@ -86,18 +87,18 @@ public class ClientProxy extends CommonProxy {
 			IModelInitialisation(WarpDrive.blockForceFieldRelays[index]);
 		}
 		
-		// IModelInitialisation(WarpDrive.blockAcceleratorController);
-		// IModelInitialisation(WarpDrive.blockAcceleratorControlPoint);
-		// IModelInitialisation(WarpDrive.blockParticlesCollider);
-		// IModelInitialisation(WarpDrive.blockParticlesInjector);
-		// IModelInitialisation(WarpDrive.blockVoidShellPlain);
-		// IModelInitialisation(WarpDrive.blockVoidShellGlass);
-		// for(byte tier = 1; tier <= 3; tier++) {
-		// 	int index = tier - 1;
-		// 	IModelInitialisation(WarpDrive.blockElectromagnetPlain[index]);
-		// 	IModelInitialisation(WarpDrive.blockElectromagnetGlass[index]);
-		// 	IModelInitialisation(WarpDrive.blockChillers[index]);
-		// }
+		IModelInitialisation(WarpDrive.blockAcceleratorController);
+		IModelInitialisation(WarpDrive.blockAcceleratorControlPoint);
+		IModelInitialisation(WarpDrive.blockParticlesCollider);
+		IModelInitialisation(WarpDrive.blockParticlesInjector);
+		IModelInitialisation(WarpDrive.blockVoidShellPlain);
+		IModelInitialisation(WarpDrive.blockVoidShellGlass);
+		for(byte tier = 1; tier <= 3; tier++) {
+			int index = tier - 1;
+			IModelInitialisation(WarpDrive.blockElectromagnetPlain[index]);
+			IModelInitialisation(WarpDrive.blockElectromagnetGlass[index]);
+			IModelInitialisation(WarpDrive.blockChillers[index]);
+		}
 		
 		IModelInitialisation(WarpDrive.blockDecorative);
 		
@@ -139,17 +140,39 @@ public class ClientProxy extends CommonProxy {
 		IModelInitialisation(WarpDrive.itemForceFieldShape);
 		IModelInitialisation(WarpDrive.itemForceFieldUpgrade);
 		
-		// IModelInitialisation(WarpDrive.itemElectromagneticCell);
+		IModelInitialisation(WarpDrive.itemElectromagneticCell);
 		
-		// entities
+		// creative tab
+		WarpDrive.creativeTabWarpDrive.setBackgroundImageName("items.png");
+		
+		// generic rendering
+		// MinecraftForge.EVENT_BUS.register(new WarpDriveKeyBindings());
+		MinecraftForge.EVENT_BUS.register(new RenderOverlayAir());
+		MinecraftForge.EVENT_BUS.register(new RenderOverlayCamera());
+		MinecraftForge.EVENT_BUS.register(new RenderOverlayLocation());
+		
+		MinecraftForge.EVENT_BUS.register(new ClientCameraHandler());
+		
+		// entity rendering
 		// RenderingRegistry.registerEntityRenderingHandler(EntityXXX.class, RenderXXX::new);
 		// RenderingRegistry.registerEntityRenderingHandler(EntityParticleBunch.class, new RenderEntityParticleBunch());
+		// @TODO MC1.10 force field rendering
+		/*
+		RenderBlockStandard.renderId = RenderingRegistry.getNextAvailableRenderId();
+		RenderingRegistry.registerBlockHandler(RenderBlockStandard.instance);
 		
-		// MinecraftForge.EVENT_BUS.register(new WarpDriveKeyBindings());
-		// MinecraftForge.EVENT_BUS.register(new RenderGameOverlay();
-		// MinecraftForge.EVENT_BUS.register(new RenderOverlayAir());
-		// MinecraftForge.EVENT_BUS.register(new RenderOverlayCamera());
-		// MinecraftForge.EVENT_BUS.register(new RenderOverlayLocation());
+		RenderBlockForceField.renderId = RenderingRegistry.getNextAvailableRenderId();
+		RenderingRegistry.registerBlockHandler(RenderBlockForceField.instance);
+		
+		RenderBlockOmnipanel.renderId = RenderingRegistry.getNextAvailableRenderId();
+		RenderingRegistry.registerBlockHandler(RenderBlockOmnipanel.instance);
+		
+		RenderBlockShipScanner.renderId = RenderingRegistry.getNextAvailableRenderId();
+		RenderingRegistry.registerBlockHandler(RenderBlockShipScanner.instance);
+		
+		RenderBlockTransporterBeacon.renderId = RenderingRegistry.getNextAvailableRenderId();
+		RenderingRegistry.registerBlockHandler(RenderBlockTransporterBeacon.instance);
+		/**/
 	}
 	
 	private static void IModelInitialisation(Object object) {

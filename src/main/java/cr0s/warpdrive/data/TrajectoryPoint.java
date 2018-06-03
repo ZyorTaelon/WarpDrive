@@ -403,6 +403,10 @@ public class TrajectoryPoint extends VectorI {
 		return isCollider(type);
 	}
 	
+	public boolean isJammed() {
+		return (type & MASK_ERRORS) != ERROR_NONE;
+	}
+	
 	public static boolean isCollider(final int type) {
 		return (type & IS_COLLIDER) != 0;
 	}

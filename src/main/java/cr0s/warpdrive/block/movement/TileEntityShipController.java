@@ -111,9 +111,6 @@ public class TileEntityShipController extends TileEntityAbstractInterfaced imple
 					tileEntityShipCoreWeakReference = new WeakReference<>(tileEntityShipCore);
 				}
 				
-				if (command.getCode() != getBlockMetadata()) {
-					updateMetadata(command.getCode());  // Activated
-				}
 				if ( isPendingScan
 				  && tileEntityShipCore.isAttached(this) ) {
 					isPendingScan = false;
@@ -127,9 +124,9 @@ public class TileEntityShipController extends TileEntityAbstractInterfaced imple
 						WarpDrive.logger.info(this + " Exception in validateShipSpatialParameters, reason: " + reason.toString());
 					}
 				}
-			} else if (getBlockMetadata() != 0) {
-				updateMetadata(0);  // Inactive
 			}
+			
+			updateBlockState(null, BlockShipController.COMMAND, command);
 		}
 	}
 	
@@ -223,8 +220,8 @@ public class TileEntityShipController extends TileEntityAbstractInterfaced imple
 	@Override
 	public ITextComponent getStatus() {
 		return super.getStatus()
-			.appendSibling(new TextComponentTranslation("warpdrive.ship.attachedPlayers",
-				getAttachedPlayersList()));
+			.appendSibling(new TextComponentTranslation("warpdrive.ship.attached_players",
+						getAttachedPlayersList()));
 	}
 	
 	private TileEntityShipCore findCoreBlock() {
@@ -265,18 +262,18 @@ public class TileEntityShipController extends TileEntityAbstractInterfaced imple
 			if (entityPlayer.getName().equals(name)) {
 				players.remove(i);
 				return Commons.getChatPrefix(getBlockType())
-					.appendSibling(new TextComponentTranslation("warpdrive.ship.playerDetached",
-				        tileEntityShipCore != null && !tileEntityShipCore.shipName.isEmpty() ? tileEntityShipCore.shipName : "-",
-				        getAttachedPlayersList()));
+					.appendSibling(new TextComponentTranslation("warpdrive.ship.player_detached",
+				                                                tileEntityShipCore != null && !tileEntityShipCore.shipName.isEmpty() ? tileEntityShipCore.shipName : "-",
+				                                                getAttachedPlayersList()));
 			}
 		}
 		
 		entityPlayer.attackEntityFrom(DamageSource.generic, 1);
 		players.add(entityPlayer.getName());
 		return Commons.getChatPrefix(getBlockType())
-			.appendSibling(new TextComponentTranslation("warpdrive.ship.playerAttached",
-		        tileEntityShipCore != null && !tileEntityShipCore.shipName.isEmpty() ? tileEntityShipCore.shipName : "-",
-		        getAttachedPlayersList()));
+			.appendSibling(new TextComponentTranslation("warpdrive.ship.player_attached",
+		                                                tileEntityShipCore != null && !tileEntityShipCore.shipName.isEmpty() ? tileEntityShipCore.shipName : "-",
+		                                                getAttachedPlayersList()));
 	}
 	
 	protected String getAttachedPlayersList() {
@@ -359,7 +356,7 @@ public class TileEntityShipController extends TileEntityAbstractInterfaced imple
 				markDirty();
 				if (WarpDriveConfig.LOGGING_LUA && hasWorldObj()) {
 					WarpDrive.logger.info(String.format("%s Command set to %s (%d)",
-					                                    this, this.command, this.command.getCode()));
+					                                    this, this.command, this.command.ordinal()));
 				}
 			}
 		}
@@ -371,7 +368,7 @@ public class TileEntityShipController extends TileEntityAbstractInterfaced imple
 		if (!success) {
 			final TileEntityShipCore tileEntityShipCore = tileEntityShipCoreWeakReference == null ? null : tileEntityShipCoreWeakReference.get();
 			if (tileEntityShipCore != null) {
-				tileEntityShipCore.messageToAllPlayersOnShip(new TextComponentString(reason.toString()));
+				tileEntityShipCore.messageToAllPlayersOnShip(new TextComponentString(reason));
 			}
 		}
 	}

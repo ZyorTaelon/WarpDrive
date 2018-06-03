@@ -47,18 +47,30 @@ public class BlockChiller extends BlockAbstractAccelerator {
 	@Override
 	public void onEntityCollidedWithBlock(final World world, final BlockPos blockPos, final IBlockState blockState, final Entity entity) {
 		super.onEntityCollidedWithBlock(world, blockPos, blockState, entity);
+		if (world.isRemote) {
+			return;
+		}
+		
 		onEntityEffect(world, blockPos, entity);
 	}
 	
 	@Override
 	public void onEntityWalk(World world, BlockPos blockPos, Entity entity) {
 		super.onEntityWalk(world, blockPos, entity);
+		if (world.isRemote) {
+			return;
+		}
+		
 		onEntityEffect(world, blockPos, entity);
 	}
 	
 	@Override
 	public void onBlockClicked(final World world, final BlockPos blockPos, final EntityPlayer entityPlayer) {
 		super.onBlockClicked(world, blockPos, entityPlayer);
+		if (world.isRemote) {
+			return;
+		}
+		
 		onEntityEffect(world, blockPos, entityPlayer);
 	}
 	

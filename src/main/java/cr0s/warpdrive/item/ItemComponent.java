@@ -1,6 +1,5 @@
 package cr0s.warpdrive.item;
 
-import cr0s.warpdrive.Commons;
 import cr0s.warpdrive.WarpDrive;
 import cr0s.warpdrive.api.IAirContainerItem;
 import cr0s.warpdrive.block.energy.BlockEnergyBank;
@@ -18,7 +17,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -29,7 +27,7 @@ public class ItemComponent extends ItemAbstractBase implements IAirContainerItem
 	public ItemComponent(final String registryName) {
 		super(registryName);
 		setHasSubtypes(true);
-		setUnlocalizedName("warpdrive.component");
+		setUnlocalizedName("warpdrive.component.malformed");
 		
 		itemStackCache = new ItemStack[EnumComponentType.length];
 	}
@@ -54,7 +52,7 @@ public class ItemComponent extends ItemAbstractBase implements IAirContainerItem
 	public String getUnlocalizedName(final ItemStack itemStack) {
 		final int damage = itemStack.getItemDamage();
 		if (damage >= 0 && damage < EnumComponentType.length) {
-			return "item.warpdrive.component." + EnumComponentType.get(damage).getUnlocalizedName();
+			return "item.warpdrive.component." + EnumComponentType.get(damage).getName();
 		}
 		return getUnlocalizedName();
 	}
@@ -73,7 +71,7 @@ public class ItemComponent extends ItemAbstractBase implements IAirContainerItem
 		final int damage = itemStack.getItemDamage();
 		ResourceLocation resourceLocation = getRegistryName();
 		if (damage >= 0 && damage < EnumComponentType.length) {
-			resourceLocation = new ResourceLocation(resourceLocation.getResourceDomain(), resourceLocation.getResourcePath() + "-" + EnumComponentType.get(damage).getUnlocalizedName());
+			resourceLocation = new ResourceLocation(resourceLocation.getResourceDomain(), resourceLocation.getResourcePath() + "-" + EnumComponentType.get(damage).getName());
 		}
 		return new ModelResourceLocation(resourceLocation, "inventory");
 	}
@@ -129,29 +127,11 @@ public class ItemComponent extends ItemAbstractBase implements IAirContainerItem
 		return null;
 	}
 	
-	
-	
 	@Override
 	public boolean doesSneakBypassUse(final ItemStack itemStack, final IBlockAccess world, final BlockPos blockPos, final EntityPlayer player) {
 		final Block block = world.getBlockState(blockPos).getBlock();
 		
 		return block instanceof BlockEnergyBank
 		    || super.doesSneakBypassUse(itemStack, world, blockPos, player);
-	}
-	
-	@Override
-	public void addInformation(final ItemStack itemStack, final EntityPlayer entityPlayer, final List<String> list, final boolean advancedItemTooltips) {
-		super.addInformation(itemStack, entityPlayer, list, advancedItemTooltips);
-		
-		String tooltip = "";
-		switch (EnumComponentType.get(itemStack.getItemDamage())) {
-		case AIR_CANISTER:
-			tooltip += new TextComponentTranslation("item.warpdrive.component.airCanisterEmpty.tooltip").getFormattedText();
-			break;
-		default:
-			break;
-		}
-		
-		Commons.addTooltip(list, tooltip);
 	}
 }

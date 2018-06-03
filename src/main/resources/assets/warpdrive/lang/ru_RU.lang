@@ -37,7 +37,7 @@ item.warpdrive.component.bone_charcoal.name=Костяной уголь
 item.warpdrive.component.activated_carbon.name=Активированный уголь
 item.warpdrive.component.laser_medium_empty.name=Лазерный излучатель (Пустой)
 item.warpdrive.component.coil_crystal.name=Coil Crystal
-item.warpdrive.component.electromagnetic_rojector.name=Electromagnetic Projector
+item.warpdrive.component.electromagnetic_projector.name=Electromagnetic Projector
 item.warpdrive.component.superconductor.name=Superconductor
 
 item.warpdrive.armor.helmet.name=Космический шлем
@@ -568,23 +568,23 @@ tile.warpdrive.hull3.stairs.black.name=Black Stained Superior Hull Stairs
 
 
 warpdrive.guide.prefix=%1$s: 
-warpdrive.error.badTileEntity=§cэтот блок нужно сломать и поставить заново.
-warpdrive.monitor.viewingCamera=Просмотр камеры на %2$d, %3$d, %4$d через канал %1$d
-warpdrive.ship.attachedPlayers=Прирепленные игроки: %1$s
-warpdrive.ship.playerAttached=Вы были прикреплены к кораблю %1$s.\nПрикрепленные игроки: %2$s
-warpdrive.ship.playerDetached=Вы были откреплены от корабля %1$s.\nПрикрепленные игроки: %2$s
+warpdrive.error.bad_tile_entity=§cэтот блок нужно сломать и поставить заново.
+warpdrive.monitor.viewing_camera=Просмотр камеры на %2$d, %3$d, %4$d через канал %1$d
+warpdrive.ship.attached_players=Прирепленные игроки: %1$s
+warpdrive.ship.player_attached=Вы были прикреплены к кораблю %1$s.\nПрикрепленные игроки: %2$s
+warpdrive.ship.player_detached=Вы были откреплены от корабля %1$s.\nПрикрепленные игроки: %2$s
 warpdrive.ship.status_line.cooling=Осталось %1$d с до остывания.
-warpdrive.ship.status_line.isolation=%1$d активных блоков изоляции предоставляют %2$2.1f%% поглощения.
+warpdrive.ship.status_line.isolation=%1$d активных блоков изоляции предоставляют %2$s%% поглощения.
 
 warpdrive.energy.status_line=Содержит энергии: %1$s / %2$s EU.
-warpdrive.energy.side.changedToInput=%1$s side changed to energy Input mode!
-warpdrive.energy.side.changedToOutput=%1$s side changed to energy Output mode!
-warpdrive.energy.side.changedToDisabled=%1$s side changed to Disabled mode!
+warpdrive.energy.side.changed_to_input=%1$s side changed to energy Input mode!
+warpdrive.energy.side.changed_to_output=%1$s side changed to energy Output mode!
+warpdrive.energy.side.changed_to_disabled=%1$s side changed to Disabled mode!
 
-warpdrive.accelerator.guide.lowPower_noStorage=Energy storage is too low; we need at least %1$d to continue operation but can only store %2$d
-warpdrive.accelerator.guide.lowPower_accelerating=We're running out of power chief, particles are on the loose, prepare for massive irradiation!
-warpdrive.accelerator.guide.lowPower_noParticles=We need more power to start the accelerator!
-warpdrive.accelerator.guide.noChiller=No chiller could be found for this accelerator!
+warpdrive.accelerator.guide.low_power.not_enough_storage=Energy storage is too low; we need at least %1$d to continue operation but can only store %2$d
+warpdrive.accelerator.guide.low_power.accelerating=We're running out of power chief (%1$d > %2$d EU), particles are on the loose, prepare for massive irradiation!
+warpdrive.accelerator.guide.low_power.no_particles=We need more power to start the accelerator!
+warpdrive.accelerator.guide.no_chiller=No chiller could be found for this accelerator!
 
 warpdrive.beam_frequency.tooltip=Частота луча установлена на %1$d
 warpdrive.beam_frequency.get=Beam frequency %2$d has been retrieved from %1$s 
@@ -605,7 +605,7 @@ warpdrive.control_channel.status_line.valid=Control channel %1$d is valid.
 warpdrive.control_channel.status_line.invalid=§cControl channel %1$d is invalid.
 warpdrive.control_channel.status_line.undefined=§7Undefined Control channel.\n§bUse a Tuning fork§r to set it.
 
-warpdrive.forcefield.guide.lowPower=We're running out of power captain, reduce our consumption or get that scottish engineer to boost our power!
+warpdrive.forcefield.guide.low_power=We're running out of power captain, reduce our consumption or get that scottish engineer to boost our power!
 
 warpdrive.forcefield.shape.status_line.none=§cShape isn't defined.
 warpdrive.forcefield.shape.status_line.double=Shape is a full %1$s
@@ -646,22 +646,22 @@ warpdrive.particle.antimatter.tooltip=Produced by colliding a particle bunch in 
 warpdrive.particle.strange_matter.name=strange matter
 warpdrive.particle.strange_matter.tooltip=Produced by colliding 2 particle bunches in a superior accelerator
 
-warpdrive.upgrade.result.noUpgradeToDismount=§cNo upgrade to dismount.
-warpdrive.upgrade.result.notEnoughUpgrades=§cYou need at least 1 item to upgrade this block.
-warpdrive.upgrade.result.invalidUpgrade=§cThis is not a valid item to upgrade this block.
-warpdrive.upgrade.result.invalidProjectorUpgrade=§cThis upgrade is too big for a projector, use a relay instead.
-warpdrive.upgrade.result.invalidRelayUpgrade=§cThis upgrade only applies to projectors.
-warpdrive.upgrade.result.validUpgrades=Valid upgrades for this block include: %1$s. @TODO not implemented yet
-warpdrive.upgrade.result.tooManyUpgrades=§cThere's already %1$d upgrades installed.
+warpdrive.upgrade.result.no_upgrade_to_dismount=§cNo upgrade to dismount.
+warpdrive.upgrade.result.not_enough_upgrades=§cYou need at least 1 item to upgrade this block.
+warpdrive.upgrade.result.invalid_upgrade=§cThis is not a valid item to upgrade this block.
+warpdrive.upgrade.result.invalid_upgrade_for_projector=§cThis upgrade is too big for a projector, use a relay instead.
+warpdrive.upgrade.result.invalid_upgrade_for_relay=§cThis upgrade only applies to projectors.
+warpdrive.upgrade.result.valid_upgrades=Valid upgrades for this block include: %1$s. @TODO not implemented yet
+warpdrive.upgrade.result.too_many_upgrades=§cThere's already %1$d upgrades installed.
 warpdrive.upgrade.result.dismounted=Upgrade %1$s was dismounted successfully.
 warpdrive.upgrade.result.mounted=Upgrade %1$s was mounted successfully.
 
-warpdrive.upgrade.result.wrongShapeSide=§cThere's no Electromagnetic projector on this side.
-warpdrive.upgrade.result.noShapeToDismount=§cNo shape to dismount.
-warpdrive.upgrade.result.notEnoughShapes.double=§cYou need at least 2 items to set the shape of a double sided projector.
-warpdrive.upgrade.result.notEnoughShapes.single=§cYou need at least 1 item to set the shape of a single sided projector.
-warpdrive.upgrade.result.shapeDismounted=Shape dismounted successfully.
-warpdrive.upgrade.result.shapeMounted=Shape mounted successfully.
+warpdrive.upgrade.result.wrong_shape_side=§cThere's no Electromagnetic projector on this side.
+warpdrive.upgrade.result.no_shape_to_dismount=§cNo shape to dismount.
+warpdrive.upgrade.result.not_enough_shapes.double=§cYou need at least 2 items to set the shape of a double sided projector.
+warpdrive.upgrade.result.not_enough_shapes.single=§cYou need at least 1 item to set the shape of a single sided projector.
+warpdrive.upgrade.result.shape_dismounted=Shape dismounted successfully.
+warpdrive.upgrade.result.shape_mounted=Shape mounted successfully.
 
 warpdrive.upgrade.status_line.none=§7No upgrade installed.
 warpdrive.upgrade.status_line.valid=Upgraded with %1$s.
@@ -675,16 +675,16 @@ warpdrive.video_channel.status_line.invalid=§cВидеоканал %1$d нед�
 warpdrive.video_channel.status_line.not_loaded=§cВидеоканал %1$d недействителен или камера слишком далеко.
 warpdrive.video_channel.status_line.undefined=§7Undefined Video channel.\n§bUse a Tuning fork§r to set it.
 
-warpdrive.cloaking_core.missingInnerAndOuter=§cIntegrity down to %1$d%%: missing channeling coil(s) towards %2$s and projecting coil(s) towards %3$s
-warpdrive.cloaking_core.missingInner=§cIntegrity down to %1$d%%: missing channeling coil(s) towards %2$s
-warpdrive.cloaking_core.missingOuter=§cIntegrity down to %1$d%%: missing projecting coil(s) towards %2$s
+warpdrive.cloaking_core.missing_channeling_and_projecting_coils=§cIntegrity down to %1$d%%: missing channeling coil(s) towards %2$s and projecting coil(s) towards %3$s
+warpdrive.cloaking_core.missing_channeling_coils=§cIntegrity down to %1$d%%: missing channeling coil(s) towards %2$s
+warpdrive.cloaking_core.missing_projecting_coils=§cIntegrity down to %1$d%%: missing projecting coil(s) towards %2$s
 warpdrive.cloaking_core.valid=System is valid
 warpdrive.cloaking_core.disabled=Маскировка выключена
-warpdrive.cloaking_core.lowPower=§cМаскировка выключилась, нужно больше энергии, капитан!
+warpdrive.cloaking_core.low_power=§cМаскировка выключилась, нужно больше энергии, капитан!
 warpdrive.cloaking_core.cloaking=Маскировка %1$d уровня покрывает %2$d блоков.
 
-warpdrive.ic2_reactor_laser_monitor.noReactor=Реактор не найден!
-warpdrive.ic2_reactor_laser_monitor.multipleReactors=%1$d реактор(ов) подключено.
+warpdrive.ic2_reactor_laser_monitor.no_reactor=Реактор не найден!
+warpdrive.ic2_reactor_laser_monitor.reactor_found=Reactor connected on %1$s.
 
 warpdrive.transporter.status=Из (%1$.0f %2$.0f %3$.0f) в (%4$.0f %5$.0f %6$.0f)
 warpdrive.transporter_beacon.status.invalid=§cNo transporter room linked

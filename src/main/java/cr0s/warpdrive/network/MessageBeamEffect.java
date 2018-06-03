@@ -23,21 +23,19 @@ public class MessageBeamEffect implements IMessage, IMessageHandler<MessageBeamE
 	private float green;
 	private float blue;
 	private int age;
-	private int energy;
 
 	@SuppressWarnings("unused")
 	public MessageBeamEffect() {
 		// required on receiving side
 	}
 	
-	public MessageBeamEffect(final Vector3 source, final Vector3 target, final float red, final float green, final float blue, final int age, final int energy) {
+	public MessageBeamEffect(final Vector3 source, final Vector3 target, final float red, final float green, final float blue, final int age) {
 		this.source = source;
 		this.target = target;
 		this.red = red;
 		this.green = green;
 		this.blue = blue;
 		this.age = age;
-		this.energy = energy;
 	}
 	
 	public MessageBeamEffect(
@@ -51,7 +49,6 @@ public class MessageBeamEffect implements IMessage, IMessageHandler<MessageBeamE
 		this.green = green;
 		this.blue = blue;
 		this.age = age;
-		this.energy = energy;
 	}
 
 	@Override
@@ -70,7 +67,6 @@ public class MessageBeamEffect implements IMessage, IMessageHandler<MessageBeamE
 		green = buffer.readFloat();
 		blue = buffer.readFloat();
 		age = buffer.readShort();
-		energy = buffer.readInt();
 	}
 	
 	@Override
@@ -85,12 +81,11 @@ public class MessageBeamEffect implements IMessage, IMessageHandler<MessageBeamE
 		buffer.writeFloat(green);
 		buffer.writeFloat(blue);
 		buffer.writeShort(Math.min(32767, age));
-		buffer.writeInt(energy);
 	}
 	
 	@SideOnly(Side.CLIENT)
 	private void handle(final World world) {
-		FMLClientHandler.instance().getClient().effectRenderer.addEffect(new EntityFXBeam(world, source.clone(), target.clone(), red, green, blue, age, energy));
+		FMLClientHandler.instance().getClient().effectRenderer.addEffect(new EntityFXBeam(world, source.clone(), target.clone(), red, green, blue, age));
 	}
 	
 	@Override
@@ -105,7 +100,7 @@ public class MessageBeamEffect implements IMessage, IMessageHandler<MessageBeamE
 		if (WarpDriveConfig.LOGGING_EFFECTS) {
 			WarpDrive.logger.info("Received beam packet from " + beamEffectMessage.source + " to " + beamEffectMessage.target
 				+ " as RGB " + beamEffectMessage.red + " " + beamEffectMessage.green + " " + beamEffectMessage.blue
-				+ " age " + beamEffectMessage.age +" energy " + beamEffectMessage.energy);
+				+ " age " + beamEffectMessage.age);
 		}
 		
         beamEffectMessage.handle(Minecraft.getMinecraft().theWorld);

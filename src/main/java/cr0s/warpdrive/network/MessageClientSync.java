@@ -23,6 +23,7 @@ public class MessageClientSync implements IMessage, IMessageHandler<MessageClien
 	
 	private NBTTagCompound tagCompound;
 	
+	@SuppressWarnings("unused")
 	public MessageClientSync() {
 		// required on receiving side
 	}

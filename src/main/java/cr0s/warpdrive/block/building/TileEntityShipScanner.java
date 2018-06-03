@@ -4,6 +4,7 @@ import cr0s.warpdrive.Commons;
 import cr0s.warpdrive.WarpDrive;
 import cr0s.warpdrive.api.ISequencerCallbacks;
 import cr0s.warpdrive.block.TileEntityAbstractInterfaced;
+import cr0s.warpdrive.block.movement.BlockShipCore;
 import cr0s.warpdrive.block.movement.TileEntityShipCore;
 import cr0s.warpdrive.config.Dictionary;
 import cr0s.warpdrive.config.WarpDriveConfig;
@@ -49,6 +50,7 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 
+import net.minecraft.world.World;
 import net.minecraftforge.fml.common.Optional;
 
 import javax.annotation.Nonnull;
@@ -429,7 +431,7 @@ public class TileEntityShipScanner extends TileEntityAbstractInterfaced implemen
 			final double distance = MathHelper.sqrt_double(dX * dX + dY * dY + dZ * dZ);
 			
 			if (distance > WarpDriveConfig.SS_MAX_DEPLOY_RADIUS_BLOCKS) {
-				reason.append(String.format("Cannot deploy ship more than %d blocks away from scanner.", WarpDriveConfig.SS_MAX_DEPLOY_RADIUS_BLOCKS));
+				reason.append(String.format("§cCannot deploy ship more than %d blocks away from scanner.", WarpDriveConfig.SS_MAX_DEPLOY_RADIUS_BLOCKS));
 				return 5;
 			}
 			
@@ -447,14 +449,11 @@ public class TileEntityShipScanner extends TileEntityAbstractInterfaced implemen
 			                  Math.max(targetLocation1.getZ(), targetLocation2.getZ()) + 1);
 			
 			if (isForced) {
-				if (!worldObj.isAirBlock(new BlockPos(targetX, targetY, targetZ))) {
-					worldObj.newExplosion(null, targetX, targetY, targetZ, 1, false, false);
+				if (!isShipCoreClear(worldObj, new BlockPos(targetX, targetY, targetZ), playerName, reason)) {
 					if (WarpDriveConfig.LOGGING_BUILDING) {
 						WarpDrive.logger.info(String.format("Deployment collision detected at (%d %d %d)",
 						                                    targetX, targetY, targetZ));
 					}
-					reason.append(String.format("Deployment area occupied with existing ship.\nCan't deploy new ship at (%d %d %d)",
-					                            targetX, targetY, targetZ));
 					return 2;
 				}
 				
@@ -488,7 +487,7 @@ public class TileEntityShipScanner extends TileEntityAbstractInterfaced implemen
 					}
 				}
 				if (occupiedBlockCount > 0) {
-					reason.append(String.format("Deployment area occupied with %d blocks. Can't deploy ship.", occupiedBlockCount));
+					reason.append(String.format("§cDeployment area occupied with %d blocks. Can't deploy ship.", occupiedBlockCount));
 					return 2;
 				}
 			}
@@ -501,6 +500,63 @@ public class TileEntityShipScanner extends TileEntityAbstractInterfaced implemen
 		setState(EnumShipScannerState.DEPLOYING);
 		reason.append(String.format("Deploying ship '%s'...", fileName));
 		return 3;
+	}
+	
+	private static boolean isShipCoreClear(final World world, final BlockPos blockPos,
+	                                       final String nameRequestingPlayer, final StringBuilder reason) {
+		final IBlockState blockState = world.getBlockState(blockPos);
+		if (blockState.getBlock().isAir(blockState, world, blockPos)) {
+			return true;
+		}
+		
+		if (!(blockState.getBlock() instanceof BlockShipCore)) {
+			world.newExplosion(null, blockPos.getX(), blockPos.getY(), blockPos.getZ(),
+			                   1, false, false);
+			reason.append(String.format("§cDeployment area occupied by %s.\nCan't deploy new ship at (%d %d %d)",
+			                            blockState.getBlock().getLocalizedName(),
+			                            blockPos.getX(), blockPos.getY(), blockPos.getZ()));
+			return false;
+		}
+		
+		final TileEntity tileEntity = world.getTileEntity(blockPos);
+		if (!(tileEntity instanceof TileEntityShipCore)) {
+			reason.append(String.format("§cDeployment area occupied with invalid tile entity %s for ship core.\nContact an admin for help at (%d %d %d)",
+			                            tileEntity,
+			                            blockPos.getX(), blockPos.getY(), blockPos.getZ()));
+			WarpDrive.logger.error(reason.toString());
+			world.newExplosion(null, blockPos.getX(), blockPos.getY(), blockPos.getZ(),
+			                   1, false, false);
+			return false;
+		}
+		
+		final TileEntityShipCore tileEntityShipCore = (TileEntityShipCore) tileEntity;
+		final String namePlayersAboard = tileEntityShipCore.getAllPlayersOnShip();
+		if (!namePlayersAboard.isEmpty()) {
+			reason.append(String.format("§cDeployment area occupied by active crew %s.\n§6Please wait or use another deployment spot",
+			                            namePlayersAboard));
+			return false;
+		}
+		
+		if (tileEntityShipCore.isBooting()) {
+			reason.append("§cDeployment area is busy.\n§6Please try again in a few seconds.");
+			return false;
+		}
+		
+		final String nameOnlineCrew = tileEntityShipCore.getFirstOnlineCrew();
+		if (nameOnlineCrew == null || nameOnlineCrew.isEmpty()) {
+			return true;
+		}
+		
+		if (nameOnlineCrew.equals(nameRequestingPlayer)) {
+			reason.append(String.format("§cDeployment area occupied by your ship, captain %s!\n§2Come back inside and use the computer to jump away!",
+			                            nameOnlineCrew));
+			return false;
+		}
+		
+		reason.append(String.format("§cDeployment area occupied with ship owned by %s.\n§6Contact that player or use another deployment spot",
+		                            nameOnlineCrew));
+		return false;
+		
 	}
 	
 	@Override

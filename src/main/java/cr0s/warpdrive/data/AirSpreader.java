@@ -136,15 +136,17 @@ public class AirSpreader {
 			if ( stateCenter.pressureVoid > 0
 			  && stateCenter.pressureGenerator > 0
 			  && stateCenter.directionGenerator == stateCenter.directionVoid.getOpposite() ) {
-				final Vector3 v3Origin = new Vector3(x + 0.5D, y + 0.5D, z + 0.5D);
-				final Vector3 v3Direction = new Vector3(stateCenter.directionVoid).scale(0.5D);
-				PacketHandler.sendSpawnParticlePacket(world, "cloud", (byte) 2, v3Origin, v3Direction,
-				                                      0.20F + 0.10F * world.rand.nextFloat(),
-				                                      0.25F + 0.25F * world.rand.nextFloat(),
-				                                      0.60F + 0.30F * world.rand.nextFloat(),
-				                                      0.0F,
-				                                      0.0F, 
-				                                      0.0F, 32);
+				if (world.rand.nextInt(4) == 2) {
+					final Vector3 v3Origin = new Vector3(x + 0.5D, y + 0.5D, z + 0.5D);
+					final Vector3 v3Direction = new Vector3(stateCenter.directionVoid).scale(0.5D);
+					PacketHandler.sendSpawnParticlePacket(world, "cloud", (byte) 2, v3Origin, v3Direction,
+					                                      0.20F + 0.10F * world.rand.nextFloat(),
+					                                      0.25F + 0.25F * world.rand.nextFloat(),
+					                                      0.60F + 0.30F * world.rand.nextFloat(),
+					                                      0.0F,
+					                                      0.0F,
+					                                      0.0F, 32);
+				}
 			}
 			return;
 		}

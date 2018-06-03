@@ -43,7 +43,7 @@ public abstract class BlockAbstractRotatingContainer extends BlockAbstractContai
 	@Nonnull
 	@Override
 	public IBlockState onBlockPlaced(final World worldIn, final BlockPos pos, final EnumFacing facing, final float hitX, final float hitY, final float hitZ, final int meta, final EntityLivingBase entityLiving) {
-		EnumFacing enumFacing = BlockAbstractBase.getFacingFromEntity(pos, entityLiving);
+		final EnumFacing enumFacing = BlockAbstractBase.getFacingFromEntity(pos, entityLiving);
 		return this.getDefaultState().withProperty(BlockProperties.FACING, enumFacing);
 	}
 }

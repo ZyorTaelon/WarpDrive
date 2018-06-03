@@ -6,6 +6,7 @@ import java.util.HashMap;
 import net.minecraft.util.IStringSerializable;
 
 public enum EnumTier implements IStringSerializable {
+	
 	CREATIVE ("creative",  0),
 	BASIC    ("basic"   ,  1),
 	ADVANCED ("advanced",  2),

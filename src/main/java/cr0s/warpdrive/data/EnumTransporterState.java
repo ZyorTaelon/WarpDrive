@@ -13,7 +13,7 @@ public enum EnumTransporterState implements IStringSerializable {
 	ENERGIZING    (3, "energizing");  // transferring entities
 	
 	private final int metadata;
-	private final String unlocalizedName;
+	private final String name;
 	
 	// cached values
 	public static final int length;
@@ -26,9 +26,9 @@ public enum EnumTransporterState implements IStringSerializable {
 		}
 	}
 	
-	EnumTransporterState(final int metadata, final String unlocalizedName) {
+	EnumTransporterState(final int metadata, final String name) {
 		this.metadata = metadata;
-		this.unlocalizedName = unlocalizedName;
+		this.name = name;
 	}
 	
 	public int getMetadata() {
@@ -41,5 +41,5 @@ public enum EnumTransporterState implements IStringSerializable {
 	
 	@Nonnull
 	@Override
-	public String getName() { return unlocalizedName; }
+	public String getName() { return name; }
 }

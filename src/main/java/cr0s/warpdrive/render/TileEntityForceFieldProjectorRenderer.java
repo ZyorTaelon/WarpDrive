@@ -79,6 +79,7 @@ public class TileEntityForceFieldProjectorRenderer extends TileEntitySpecialRend
 		// GlStateManager.disableCull();
 		RenderHelper.disableStandardItemLighting();
 		GlStateManager.enableLighting();
+		// @TODO setLightmapDisabled
 		
 		final float wheelRotation = tileEntityForceFieldProjector.rotation_deg + partialTicks * tileEntityForceFieldProjector.rotationSpeed_degPerTick;
 		GlStateManager.rotate(wheelRotation, 0.0F, 1.0F, 0.0F);

@@ -97,7 +97,9 @@ public class CloakManager {
 		if (world.isRemote) {
 			newArea.clientCloak();
 		}
-		if (WarpDriveConfig.LOGGING_CLOAKING) { WarpDrive.logger.info("Cloak count is " + cloaks.size()); }
+		if (WarpDriveConfig.LOGGING_CLOAKING) {
+			WarpDrive.logger.info("Cloak count is " + cloaks.size());
+		}
 	}
 	
 	public void removeCloakedArea(final int dimensionId, final BlockPos blockPos) {
@@ -118,18 +120,7 @@ public class CloakManager {
 	public CloakedArea getCloakedArea(final World world, final BlockPos blockPos) {
 		for (final CloakedArea area : cloaks) {
 			if ( area.dimensionId == world.provider.getDimension()
-			  && area.blockPosCore.equals(blockPos) )
-				return area;
-		}
-		
-		return null;
-	}
-	
-	@SideOnly(Side.CLIENT)
-	public CloakedArea getCloakedArea(final BlockPos blockPos) {
-		// client only 
-		for (final CloakedArea area : cloaks) {
-			if (area.blockPosCore.equals(blockPos)) {
+			  && area.blockPosCore.equals(blockPos) ) {
 				return area;
 			}
 		}
@@ -143,9 +134,10 @@ public class CloakManager {
 		}
 	}
 	
+	@SuppressWarnings("unused") // Core mod
 	@SideOnly(Side.CLIENT)
 	public static boolean onBlockChange(final int x, final int y, final int z, final Block block, final int metadata, final int flag) {
-		if (block != Blocks.AIR && cloaks != null) {
+		if (block != Blocks.AIR) {
 			for (final CloakedArea area : cloaks) {
 				if (area.isBlockWithinArea(x, y, z)) {
 					// WarpDrive.logger.info("CM block is inside");
@@ -159,6 +151,7 @@ public class CloakManager {
 		return Minecraft.getMinecraft().theWorld.setBlockState(new BlockPos(x, y, z), block.getStateFromMeta(metadata), flag);
 	}
 	
+	@SuppressWarnings("unused") // Core mod
 	@SideOnly(Side.CLIENT)
 	public static void onFillChunk(final Chunk chunk) {
 		if (cloaks == null) {

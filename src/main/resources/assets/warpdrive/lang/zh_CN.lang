@@ -16,29 +16,29 @@ death.attack.warpdrive.warm.player=%1$s被%2$s煮熟了
 
 itemGroup.warpdrive=曲率驱动
 
-item.warpdrive.crafting.Malformed.name=畸变废品
-item.warpdrive.crafting.EmeraldCrystal.name=绿宝石调谐水晶
-item.warpdrive.crafting.EnderCrystal.name=末影调谐水晶
-item.warpdrive.crafting.DiamondCrystal.name=钻石调谐水晶
-item.warpdrive.crafting.DiffractionGrating.name=衍射光栅
-item.warpdrive.crafting.ReactorCore.name=反应堆芯
-item.warpdrive.crafting.ComputerInterface.name=计算机接口
-item.warpdrive.crafting.PowerInterface.name=电源接口
-item.warpdrive.crafting.CapacitiveCrystal.name=电容水晶
-item.warpdrive.crafting.AirCanisterEmpty.name=空气罐(空)
-item.warpdrive.crafting.AirCanisterEmpty.tooltip=§b右键一个空气发生器§7来进行填充
-item.warpdrive.crafting.Lens.name=透镜
-item.warpdrive.crafting.Zoom.name=缩放
-item.warpdrive.crafting.GlassTank.name=玻璃水槽
-item.warpdrive.crafting.FlatScreen.name=平面屏幕
-item.warpdrive.crafting.MemoryCrystal.name=记忆水晶
-item.warpdrive.crafting.Motor.name=发动机
-item.warpdrive.crafting.BoneCharcoal.name=骨炭
-item.warpdrive.crafting.ActivatedCarbon.name=活性炭
-item.warpdrive.crafting.LaserMediumEmpty.name=激光媒质(空)
-item.warpdrive.crafting.CoilCrystal.name=线圈水晶
-item.warpdrive.crafting.ElectromagneticProjector.name=电磁投影仪
-item.warpdrive.crafting.Superconductor.name=超导体
+item.warpdrive.component.malformed.name=畸变废品
+item.warpdrive.component.emerald_crystal.name=绿宝石调谐水晶
+item.warpdrive.component.ender_crystal.name=末影调谐水晶
+item.warpdrive.component.diamond_crystal.name=钻石调谐水晶
+item.warpdrive.component.diffraction_grating.name=衍射光栅
+item.warpdrive.component.reactor_core.name=反应堆芯
+item.warpdrive.component.computer_interface.name=计算机接口
+item.warpdrive.component.power_interface.name=电源接口
+item.warpdrive.component.capacitive_crystal.name=电容水晶
+item.warpdrive.component.air_canister_empty.name=空气罐(空)
+item.warpdrive.component.air_canister_empty.tooltip=§b右键一个空气发生器§7来进行填充
+item.warpdrive.component.lens.name=透镜
+item.warpdrive.component.zoom.name=缩放
+item.warpdrive.component.glass_tank.name=玻璃水槽
+item.warpdrive.component.flat_screen.name=平面屏幕
+item.warpdrive.component.memory_crystal.name=记忆水晶
+item.warpdrive.component.motor.name=发动机
+item.warpdrive.component.bone_charcoal.name=骨炭
+item.warpdrive.component.activated_carbon.name=活性炭
+item.warpdrive.component.laser_medium_empty.name=激光媒质(空)
+item.warpdrive.component.coil_crystal.name=线圈水晶
+item.warpdrive.component.electromagnetic_projector.name=电磁投影仪
+item.warpdrive.component.superconductor.name=超导体
 
 item.warpdrive.armor.helmet.name=曲率头盔
 item.warpdrive.armor.chestplate.name=曲率胸甲
@@ -565,23 +565,23 @@ tile.warpdrive.hull3.stairs.black.name=黑色卓越船体楼梯
 
 
 warpdrive.guide.prefix=%1$s: 
-warpdrive.error.badTileEntity=§c需要重放置以更新此方块.
-warpdrive.monitor.viewingCamera=观景相机位于 %2$d, %3$d, %4$d 在视频频道%1$d
-warpdrive.ship.attachedPlayers=所属的玩家: %1$s
-warpdrive.ship.playerAttached=你在飞船 %1$s上.\n属于%2$s
-warpdrive.ship.playerDetached=你已经脱离了飞船 %1$s.\n属于%2$s
+warpdrive.error.bad_tile_entity=§c需要重放置以更新此方块.
+warpdrive.monitor.viewing_camera=观景相机位于 %2$d, %3$d, %4$d 在视频频道%1$d
+warpdrive.ship.attached_players=所属的玩家: %1$s
+warpdrive.ship.player_attached=你在飞船 %1$s上.\n属于%2$s
+warpdrive.ship.player_detached=你已经脱离了飞船 %1$s.\n属于%2$s
 warpdrive.ship.status_line.cooling=%1$d s 冷却时间
-warpdrive.ship.status_line.isolation=%1$d有效的隔离方块提供%2$2.1f%%吸收.
+warpdrive.ship.status_line.isolation=%1$d有效的隔离方块提供%2$s%%吸收.
 
 warpdrive.energy.status_line=能量水平%1$s / %2$s EU.
-warpdrive.energy.side.changedToInput=%1$s侧面更改为能量输入模式！
-warpdrive.energy.side.changedToOutput=%1$s侧面更改为能量输出模式！
-warpdrive.energy.side.changedToDisabled=%1$s侧面更改为禁用模式！
+warpdrive.energy.side.changed_to_input=%1$s侧面更改为能量输入模式！
+warpdrive.energy.side.changed_to_output=%1$s侧面更改为能量输出模式！
+warpdrive.energy.side.changed_to_disabled=%1$s侧面更改为禁用模式！
 
-warpdrive.accelerator.guide.lowPower_noStorage=能量不足;我们需要%1$d的能量储备维持运转  目前仅剩%2$d
-warpdrive.accelerator.guide.lowPower_accelerating=我们的主能量储备耗尽, 粒子正在泄漏,准备承受巨量辐射!
-warpdrive.accelerator.guide.lowPower_noParticles=需要更多能量以启动加速器!
-warpdrive.accelerator.guide.noChiller=这台加速器没有冷却设备!
+warpdrive.accelerator.guide.low_power.not_enough_storage=能量不足;我们需要%1$d的能量储备维持运转  目前仅剩%2$d
+warpdrive.accelerator.guide.low_power.accelerating=我们的主能量储备耗尽 (%1$d > %2$d EU), 粒子正在泄漏,准备承受巨量辐射!
+warpdrive.accelerator.guide.low_power.no_particles=需要更多能量以启动加速器!
+warpdrive.accelerator.guide.no_chiller=这台加速器没有冷却设备!
 
 warpdrive.beam_frequency.tooltip=设置光束频率为%1$d
 warpdrive.beam_frequency.get=光束频率%2$d 已从 %1$s 断开
@@ -602,7 +602,7 @@ warpdrive.control_channel.status_line.valid=控制连接 %1$d 有效.
 warpdrive.control_channel.status_line.invalid=§c控制连接 %1$d 无效.
 warpdrive.control_channel.status_line.undefined=§7未定义控制连接.\n§b使用音叉§r进行设置.
 
-warpdrive.forcefield.guide.lowPower=舰长，我们的能量已耗尽，请降低能耗或者找一个苏格兰工程师恢复能量!
+warpdrive.forcefield.guide.low_power=舰长，我们的能量已耗尽，请降低能耗或者找一个苏格兰工程师恢复能量!
 
 warpdrive.forcefield.shape.status_line.none=§c形状未定义.
 warpdrive.forcefield.shape.status_line.double=形状是完整的%1$s
@@ -643,22 +643,22 @@ warpdrive.particle.antimatter.tooltip=产生于卓越粒子加速器的束流对
 warpdrive.particle.strange_matter.name=奇异物质
 warpdrive.particle.strange_matter.tooltip=产生于卓越粒子加速器的二级束流对撞中.
 
-warpdrive.upgrade.result.noUpgradeToDismount=§c没有可卸载的升级
-warpdrive.upgrade.result.notEnoughUpgrades=§c你需要至少一个物品去升级这个方块
-warpdrive.upgrade.result.invalidUpgrade=§c这不是一个能够升级升级方块的有效物品
-warpdrive.upgrade.result.invalidProjectorUpgrade=§c这个升级对于一个投影仪来说过于巨大，需要用一个继电器来替代它.
-warpdrive.upgrade.result.invalidRelayUpgrade=§c这个升级只适用于投影仪.
-warpdrive.upgrade.result.validUpgrades=这个方块所能加载的有效升级包括: %1$s. @TODO 仍未加载
-warpdrive.upgrade.result.tooManyUpgrades=§c这个 %1$d升级已经安装.
+warpdrive.upgrade.result.no_upgrade_to_dismount=§c没有可卸载的升级
+warpdrive.upgrade.result.not_enough_upgrades=§c你需要至少一个物品去升级这个方块
+warpdrive.upgrade.result.invalid_upgrade=§c这不是一个能够升级升级方块的有效物品
+warpdrive.upgrade.result.invalid_upgrade_for_projector=§c这个升级对于一个投影仪来说过于巨大，需要用一个继电器来替代它.
+warpdrive.upgrade.result.invalid_upgrade_for_relay=§c这个升级只适用于投影仪.
+warpdrive.upgrade.result.valid_upgrades=这个方块所能加载的有效升级包括: %1$s. @TODO 仍未加载
+warpdrive.upgrade.result.too_many_upgrades=§c这个 %1$d升级已经安装.
 warpdrive.upgrade.result.dismounted=升级 %1$s 已经被成功卸载.
 warpdrive.upgrade.result.mounted=升级 %1$s已被成功安装.
 
-warpdrive.upgrade.result.wrongShapeSide=§c这一边没有电磁投影仪。
-warpdrive.upgrade.result.noShapeToDismount=§c没有模型可供卸载
-warpdrive.upgrade.result.notEnoughShapes.double=§c你需要至少两个物品去设定一个双面投影仪所投影的形状.
-warpdrive.upgrade.result.notEnoughShapes.single=§c你需要至少一个物品去设定一个单面投影仪所投影的形状.
-warpdrive.upgrade.result.shapeDismounted=模型卸载成功.
-warpdrive.upgrade.result.shapeMounted=模型加载成功.
+warpdrive.upgrade.result.wrong_shape_side=§c这一边没有电磁投影仪。
+warpdrive.upgrade.result.no_shape_to_dismount=§c没有模型可供卸载
+warpdrive.upgrade.result.not_enough_shapes.double=§c你需要至少两个物品去设定一个双面投影仪所投影的形状.
+warpdrive.upgrade.result.not_enough_shapes.single=§c你需要至少一个物品去设定一个单面投影仪所投影的形状.
+warpdrive.upgrade.result.shape_dismounted=模型卸载成功.
+warpdrive.upgrade.result.shape_mounted=模型加载成功.
 
 warpdrive.upgrade.status_line.none=§7没有安装升级
 warpdrive.upgrade.status_line.valid=用升级%1$s.
@@ -672,16 +672,16 @@ warpdrive.video_channel.status_line.invalid=§c视频通道 %1$d 无效.
 warpdrive.video_channel.status_line.not_loaded=§c视频通道 %1$d 无效或者是相机的距离太远!
 warpdrive.video_channel.status_line.undefined=§7未定义的视频通道.\n§b使用一个音叉§r 去设置它.
 
-warpdrive.cloaking_core.missingInnerAndOuter=§c完整度降低至 %1$d%%: %2$s 线圈失去联系且预计将失去 %3$s 线圈
-warpdrive.cloaking_core.missingInner=§c完整度降低至 %1$d%%: %2$s 线圈失去联系
-warpdrive.cloaking_core.missingOuter=§c完整度降低至 %1$d%%: 预计丢失 %2$s 线圈
+warpdrive.cloaking_core.missing_channeling_and_projecting_coils=§c完整度降低至 %1$d%%: %2$s 线圈失去联系且预计将失去 %3$s 线圈
+warpdrive.cloaking_core.missing_channeling_coils=§c完整度降低至 %1$d%%: %2$s 线圈失去联系
+warpdrive.cloaking_core.missing_projecting_coils=§c完整度降低至 %1$d%%: 预计丢失 %2$s 线圈
 warpdrive.cloaking_core.valid=系统认证
 warpdrive.cloaking_core.disabled=伪装被禁用
-warpdrive.cloaking_core.lowPower=§c伪装失效，我们需要更多的能量.
+warpdrive.cloaking_core.low_power=§c伪装失效，我们需要更多的能量.
 warpdrive.cloaking_core.cloaking=一个层级 %1$d 伪装目前覆盖 %2$d方块!
 
-warpdrive.ic2_reactor_laser_monitor.noReactor=未发现反应堆!
-warpdrive.ic2_reactor_laser_monitor.multipleReactors=%1$d反应堆已连接.
+warpdrive.ic2_reactor_laser_monitor.no_reactor=未发现反应堆!
+warpdrive.ic2_reactor_laser_monitor.reactor_found=Reactor connected on %1$s.
 
 warpdrive.transporter.status=从 (%1$.0f %2$.0f %3$.0f) 到 (%4$.0f %5$.0f %6$.0f)
 warpdrive.transporter_beacon.status.invalid=§cNo transporter room linked

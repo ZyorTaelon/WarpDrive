@@ -1,13 +1,17 @@
 package cr0s.warpdrive.data;
 
+import net.minecraft.util.IStringSerializable;
+
+import javax.annotation.Nonnull;
 import java.util.HashMap;
 
-public enum EnumHullPlainType {
+public enum EnumHullPlainType implements IStringSerializable {
+	
 	PLAIN               ("plain"),
 	TILED               ("tiled"),
 	;
 	
-	private final String unlocalizedName;
+	private final String name;
 	
 	// cached values
 	public static final int length;
@@ -20,13 +24,15 @@ public enum EnumHullPlainType {
 		}
 	}
 	
-	EnumHullPlainType(final String unlocalizedName) {
-		this.unlocalizedName = unlocalizedName;
+	EnumHullPlainType(final String name) {
+		this.name = name;
 	}
 	
 	public static EnumHullPlainType get(final int index) {
 		return ID_MAP.get(index);
 	}
 	
-	public String getName() { return unlocalizedName; }
+	@Nonnull
+	@Override
+	public String getName() { return name; }
 }

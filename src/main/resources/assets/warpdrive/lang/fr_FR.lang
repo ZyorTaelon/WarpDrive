@@ -21,9 +21,9 @@ item.warpdrive.component.emerald_crystal.name=Cristal d'émeraude accordé
 item.warpdrive.component.ender_crystal.name=Cristal de l'ender accordé
 item.warpdrive.component.diamond_crystal.name=Cristal de diamond accordé
 item.warpdrive.component.diffraction_grating.name=Réseau de diffraction
-item.warpdrive.component.reactor_core.name=Noyau de réacteur
+item.warpdrive.component.reactor_core.name=Noyeau de réacteur
 item.warpdrive.component.computer_interface.name=Interface informatique
-item.warpdrive.component.power_interface.name=Interface de puissance
+item.warpdrive.component.power_interface.name=Power Interface
 item.warpdrive.component.capacitive_crystal.name=Cristal capacitif
 item.warpdrive.component.air_canister_empty.name=Cartouche d'air vide
 item.warpdrive.component.air_canister_empty.tooltip=§bClique droit sur un Générateur d'air§r pour me remplir
@@ -568,23 +568,23 @@ tile.warpdrive.hull3.stairs.black.name=Escalier de coque supérieure noire
 
 
 warpdrive.guide.prefix=%1$s: 
-warpdrive.error.badTileEntity=§cCe bloc requiers une mise à jour par dépose puis repose.
-warpdrive.monitor.viewingCamera=Affichage de la caméra à %2$d, %3$d, %4$d sur le canal vidéo %1$d
-warpdrive.ship.attachedPlayers=Joueurs attachés: %1$s
-warpdrive.ship.playerAttached=Tu es désormais attaché au vaisseau %1$s.\nLes joueurs attachés sont %2$s
-warpdrive.ship.playerDetached=Tu es désormais détaché du vaisseau %1$s.\nLes joueurs attachés sont %2$s
+warpdrive.error.bad_tile_entity=§cCe bloc requiers une mise à jour par dépose puis repose.
+warpdrive.monitor.viewing_camera=Affichage de la caméra à %2$d, %3$d, %4$d sur le canal vidéo %1$d
+warpdrive.ship.attached_players=Joueurs attachés: %1$s
+warpdrive.ship.player_attached=Tu es désormais attaché au vaisseau %1$s.\nLes joueurs attachés sont %2$s
+warpdrive.ship.player_detached=Tu es désormais détaché du vaisseau %1$s.\nLes joueurs attachés sont %2$s
 warpdrive.ship.status_line.cooling=Encore %1$d s de refroidissement.
-warpdrive.ship.status_line.isolation=Les %1$d blocs d'isolations actifs fournissent %2$2.1f%% d'absorption.
+warpdrive.ship.status_line.isolation=Les %1$d blocs d'isolations actifs fournissent %2$s%% d'absorption.
 
 warpdrive.energy.status_line=Le niveau d'énergie est de %1$s / %2$s EU.
-warpdrive.energy.side.changedToInput=Le coté %1$s est en mode Réception d'énergie!
-warpdrive.energy.side.changedToOutput=Le coté %1$s est en mode Emission d'énergie!
-warpdrive.energy.side.changedToDisabled=Le coté %1$s side est en mode Inactif!
+warpdrive.energy.side.changed_to_input=Le coté %1$s est en mode Réception d'énergie!
+warpdrive.energy.side.changed_to_output=Le coté %1$s est en mode Emission d'énergie!
+warpdrive.energy.side.changed_to_disabled=Le coté %1$s side est en mode Inactif!
 
-warpdrive.accelerator.guide.lowPower_noStorage=La capacité de stockage d'énergie est insuffisante; Nous avons besoin d'au moins %1$d pour continuer mais ne pouvons stocker que %2$d
-warpdrive.accelerator.guide.lowPower_accelerating=Nous sommes à court d'énergie Capitaine, les bunches de particules s'échappent, préparez-vous à une irradiation de masse! 
-warpdrive.accelerator.guide.lowPower_noParticles=Il nous faut plus d'énergie pour démarrer l'accélérateur!
-warpdrive.accelerator.guide.noChiller=Cet accélérateur n'a aucun refroidisseur!
+warpdrive.accelerator.guide.low_power.not_enough_storage=La capacité de stockage d'énergie est insuffisante; Nous avons besoin d'au moins %1$d pour continuer mais ne pouvons stocker que %2$d
+warpdrive.accelerator.guide.low_power.accelerating=Nous sommes à court d'énergie chef (%1$d > %2$d EU), les bunches de particules s'échappent, préparez-vous à une irradiation de masse!
+warpdrive.accelerator.guide.low_power.no_particles=Il nous faut plus d'énergie pour démarrer l'accélérateur!
+warpdrive.accelerator.guide.no_chiller=Cet accélérateur n'a aucun refroidisseur!
 
 warpdrive.beam_frequency.tooltip=Fréquence de faisceau ajustée à %1$d
 warpdrive.beam_frequency.get=Beam frequency %2$d has been retrieved from %1$s 
@@ -605,7 +605,7 @@ warpdrive.control_channel.status_line.valid=Le canal de contrôle %1$d est valid
 warpdrive.control_channel.status_line.invalid=§cLe canal de contrôle %1$d est invalide.
 warpdrive.control_channel.status_line.undefined=§7Le canal de contrôle est non défini.\n§bUtilises un Diapason§r pour l'ajuster.
 
-warpdrive.forcefield.guide.lowPower=Nous sommes à court d'énergie Capitaine, réduissez la consommation ou appelez l'ingénieur écossais pour booster notre production!
+warpdrive.forcefield.guide.low_power=Nous sommes à court d'énergie Capitaine, réduissez la consommation ou appelez l'ingénieur écossais pour booster notre production!
 
 warpdrive.forcefield.shape.status_line.none=§cLa forme n'est pas définie.
 warpdrive.forcefield.shape.status_line.double=La forme est %1$s plein(e)
@@ -646,22 +646,22 @@ warpdrive.particle.antimatter.tooltip=Produit par collision d'un bunch de partic
 warpdrive.particle.strange_matter.name=matière étrange
 warpdrive.particle.strange_matter.tooltip=Produit par collision frontale de 2 bunches de particules dans un accélérateur supérieur
 
-warpdrive.upgrade.result.noUpgradeToDismount=§cAucune amélioration à démonter.
-warpdrive.upgrade.result.notEnoughUpgrades=§cIl faut au moins 1 object pour améliorer ce bloc.
-warpdrive.upgrade.result.invalidUpgrade=§cThis is not a valid item to upgrade this block.
-warpdrive.upgrade.result.invalidProjectorUpgrade=§cCette amélioration est trop grosse pour un projecteur, utilises un relais à la place.
-warpdrive.upgrade.result.invalidRelayUpgrade=§cCette amélioration s'applique uniquement sur un projecteur.
-warpdrive.upgrade.result.validUpgrades=Valid upgrades for this block include: %1$s. @TODO not implemented yet
-warpdrive.upgrade.result.tooManyUpgrades=§cCette amélioration est déjà montée %1$s fois sur ce bloc, utilises un relais à la place.
+warpdrive.upgrade.result.no_upgrade_to_dismount=§cAucune amélioration à démonter.
+warpdrive.upgrade.result.not_enough_upgrades=§cIl faut au moins 1 object pour améliorer ce bloc.
+warpdrive.upgrade.result.invalid_upgrade=§cThis is not a valid item to upgrade this block.
+warpdrive.upgrade.result.invalid_upgrade_for_projector=§cCette amélioration est trop grosse pour un projecteur, utilises un relais à la place.
+warpdrive.upgrade.result.invalid_upgrade_for_relay=§cCette amélioration s'applique uniquement sur un projecteur.
+warpdrive.upgrade.result.valid_upgrades=Valid upgrades for this block include: %1$s. @TODO not implemented yet
+warpdrive.upgrade.result.too_many_upgrades=§cCette amélioration est déjà montée %1$s fois sur ce bloc, utilises un relais à la place.
 warpdrive.upgrade.result.dismounted=Amélioration %1$s démontée correctement.
 warpdrive.upgrade.result.mounted=Amélioration %1$s montée correctement.
 
-warpdrive.upgrade.result.wrongShapeSide=§cIl n'y a pas de projecteur électromagnétique sur cette face.
-warpdrive.upgrade.result.noShapeToDismount=§cAucune forme à démonter.
-warpdrive.upgrade.result.notEnoughShapes.double=§cIl faut au moins 2 objets pour établir la forme d'un projecteur double face.
-warpdrive.upgrade.result.notEnoughShapes.single=§cIl faut au moins 1 object pour établir la forme d'un projecteur simple face.
-warpdrive.upgrade.result.shapeDismounted=Forme démontée correctement.
-warpdrive.upgrade.result.shapeMounted=Forme montée correctement.
+warpdrive.upgrade.result.wrong_shape_side=§cIl n'y a pas de projecteur électromagnétique sur cette face.
+warpdrive.upgrade.result.no_shape_to_dismount=§cAucune forme à démonter.
+warpdrive.upgrade.result.not_enough_shapes.double=§cIl faut au moins 2 objets pour établir la forme d'un projecteur double face.
+warpdrive.upgrade.result.not_enough_shapes.single=§cIl faut au moins 1 object pour établir la forme d'un projecteur simple face.
+warpdrive.upgrade.result.shape_dismounted=Forme démontée correctement.
+warpdrive.upgrade.result.shape_mounted=Forme montée correctement.
 
 warpdrive.upgrade.status_line.none=§7Pas d'augmentation installée.
 warpdrive.upgrade.status_line.valid=Augmenté avec %1$s.
@@ -675,16 +675,16 @@ warpdrive.video_channel.status_line.invalid=§cLe canal vidéo %1$d est invalide
 warpdrive.video_channel.status_line.not_loaded=§cLe canal vidéo %1$d est invalide ou la caméra est trop loin!
 warpdrive.video_channel.status_line.undefined=§7Le canal vidéo est non défini.\n§bUtilises un Diapason§r pour l'ajuster.
 
-warpdrive.cloaking_core.missingInnerAndOuter=§cIntegrité réduite à %1$d%%: bobine(s) de canalisation manquante(nt) en direction de %2$s, et bobine(s) de projection manquante(nt) en direction de %3$s
-warpdrive.cloaking_core.missingInner=§cIntegrité réduite à %1$d%%: bobine(s) de canalisation manquante(nt) en direction de %2$s
-warpdrive.cloaking_core.missingOuter=§cIntegrité réduite à %1$d%%: bobine(s) de projection manquante(nt) en direction de %2$s
+warpdrive.cloaking_core.missing_channeling_and_projecting_coils=§cIntegrité réduite à %1$d%%: bobine(s) de canalisation manquante(nt) en direction de %2$s, et bobine(s) de projection manquante(nt) en direction de %3$s
+warpdrive.cloaking_core.missing_channeling_coils=§cIntegrité réduite à %1$d%%: bobine(s) de canalisation manquante(nt) en direction de %2$s
+warpdrive.cloaking_core.missing_projecting_coils=§cIntegrité réduite à %1$d%%: bobine(s) de projection manquante(nt) en direction de %2$s
 warpdrive.cloaking_core.valid=Le système est valide
 warpdrive.cloaking_core.disabled=Le champ d'invisibilité est désactivé
-warpdrive.cloaking_core.lowPower=§cLe champ d'invisibilité est en panne. Il nous faut plus d'énergie, Capitaine!
+warpdrive.cloaking_core.low_power=§cLe champ d'invisibilité est en panne. Il nous faut plus d'énergie, Capitaine!
 warpdrive.cloaking_core.cloaking=Un champ de niveau %1$d couvre actuellement %2$d blocs!
 
-warpdrive.ic2_reactor_laser_monitor.noReactor=Pas de réacteur IC2 trouvé!
-warpdrive.ic2_reactor_laser_monitor.multipleReactors=%1$d réacteur(s) connecté(s).
+warpdrive.ic2_reactor_laser_monitor.no_reactor=Pas de réacteur IC2 trouvé!
+warpdrive.ic2_reactor_laser_monitor.reactor_found=Réacteur connecté au %1$s.
 
 warpdrive.transporter.status=De (%1$.0f %2$.0f %3$.0f) à (%4$.0f %5$.0f %6$.0f)
 warpdrive.transporter_beacon.status.invalid=§cNo transporter room linked

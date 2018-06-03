@@ -16,29 +16,29 @@ death.attack.warpdrive.warm.player=%1$s is gekookt door %2$s
 
 itemGroup.warpdrive=WarpDrive
 
-item.warpdrive.crafting.Malformed.name=Verkeerd item
-item.warpdrive.crafting.EmeraldCrystal.name=Smaragd afgestemd kristal
-item.warpdrive.crafting.EnderCrystal.name=Einde afgestemd kristal
-item.warpdrive.crafting.DiamondCrystal.name=Diamant afgestemd kristal
-item.warpdrive.crafting.DiffractionGrating.name=Diffractierooster
-item.warpdrive.crafting.ReactorCore.name=Reactor Kern
-item.warpdrive.crafting.ComputerInterface.name=Computer Interface
-item.warpdrive.crafting.PowerInterface.name=Stroom Interface
-item.warpdrive.crafting.CapacitiveCrystal.name=Capacitief Kristal
-item.warpdrive.crafting.AirCanisterEmpty.name=Lege zuurstoffles
-item.warpdrive.crafting.AirCanisterEmpty.tooltip=§bRechts-klik op de zuurstofgenerator§7 om me te hervullen
-item.warpdrive.crafting.Lens.name=Lens
-item.warpdrive.crafting.Zoom.name=Zoom
-item.warpdrive.crafting.GlassTank.name=Tank van Glas
-item.warpdrive.crafting.FlatScreen.name=Flat Screen
-item.warpdrive.crafting.MemoryCrystal.name=Geheugen Kristal
-item.warpdrive.crafting.Motor.name=Motor
-item.warpdrive.crafting.BoneCharcoal.name=Botkool
-item.warpdrive.crafting.ActivatedCarbon.name=Geactiveerde Koolstof
-item.warpdrive.crafting.LaserMediumEmpty.name=Lege Deeltjesversneller
-item.warpdrive.crafting.CoilCrystal.name=Spoelkristal
-item.warpdrive.crafting.ElectromagneticProjector.name=Electromagnetische Projector
-item.warpdrive.crafting.Superconductor.name=Superconductor
+item.warpdrive.component.malformed.name=Verkeerd item
+item.warpdrive.component.emerald_crystal.name=Smaragd afgestemd kristal
+item.warpdrive.component.ender_crystal.name=Einde afgestemd kristal
+item.warpdrive.component.diamond_crystal.name=Diamant afgestemd kristal
+item.warpdrive.component.diffraction_grating.name=Diffractierooster
+item.warpdrive.component.reactor_core.name=Reactor Kern
+item.warpdrive.component.computer_interface.name=Computer Interface
+item.warpdrive.component.power_interface.name=Stroom Interface
+item.warpdrive.component.capacitive_crystal.name=Capacitief Kristal
+item.warpdrive.component.air_canister_empty.name=Lege zuurstoffles
+item.warpdrive.component.air_canister_empty.tooltip=§bRechts-klik op de zuurstofgenerator§7 om me te hervullen
+item.warpdrive.component.lens.name=Lens
+item.warpdrive.component.zoom.name=Zoom
+item.warpdrive.component.glass_tank.name=Tank van Glas
+item.warpdrive.component.flat_screen.name=Flat Screen
+item.warpdrive.component.memory_crystal.name=Geheugen Kristal
+item.warpdrive.component.motor.name=Motor
+item.warpdrive.component.bone_charcoal.name=Botkool
+item.warpdrive.component.activated_carbon.name=Geactiveerde Koolstof
+item.warpdrive.component.laser_medium_empty.name=Lege Deeltjesversneller
+item.warpdrive.component.coil_crystal.name=Spoelkristal
+item.warpdrive.component.electromagnetic_projector.name=Electromagnetische Projector
+item.warpdrive.component.superconductor.name=Superconductor
 
 item.warpdrive.armor.helmet.name=Warp Helm
 item.warpdrive.armor.chestplate.name=Warp Borstplaat
@@ -565,23 +565,23 @@ tile.warpdrive.hull3.stairs.black.name=Zwart Gekleurd Superieur Pantser Trap
 
 
 warpdrive.guide.prefix=%1$s: 
-warpdrive.error.badTileEntity=§cDit blok heeft een verversing nodig door het de breken en weer te plaatsen.
-warpdrive.monitor.viewingCamera=Camera op%2$d, %3$d, %4$d met videokanaal %1$d aan het bekijken...
-warpdrive.ship.attachedPlayers=Aangesloten Spelers: %1$s
-warpdrive.ship.playerAttached=Je bent nu aangesloten op schip %1$s.\nDe aangesloten spelers zijn %2$s
-warpdrive.ship.playerDetached=Je bent nu afgesloten op schip %1$s.\nDe aangesloten spelers zijn %2$s
+warpdrive.error.bad_tile_entity=§cDit blok heeft een verversing nodig door het de breken en weer te plaatsen.
+warpdrive.monitor.viewing_camera=Camera op%2$d, %3$d, %4$d met videokanaal %1$d aan het bekijken...
+warpdrive.ship.attached_players=Aangesloten Spelers: %1$s
+warpdrive.ship.player_attached=Je bent nu aangesloten op schip %1$s.\nDe aangesloten spelers zijn %2$s
+warpdrive.ship.player_detached=Je bent nu afgesloten op schip %1$s.\nDe aangesloten spelers zijn %2$s
 warpdrive.ship.status_line.cooling=%1$d seconden over van afkoeling
-warpdrive.ship.status_line.isolation=%1$d actieve isolatie-blokken geven %2$2.1f%% absorptie.
+warpdrive.ship.status_line.isolation=%1$d actieve isolatie-blokken geven %2$s%% absorptie.
 
 warpdrive.energy.status_line=Energielevel is op %1$s / %2$s EU.
-warpdrive.energy.side.changedToInput=%1$s kant verandert naar energie input modus!
-warpdrive.energy.side.changedToOutput=%1$s kant verandert naar energie output modus!
-warpdrive.energy.side.changedToDisabled=%1$s kant verandert naar inactief modus!
+warpdrive.energy.side.changed_to_input=%1$s kant verandert naar energie input modus!
+warpdrive.energy.side.changed_to_output=%1$s kant verandert naar energie output modus!
+warpdrive.energy.side.changed_to_disabled=%1$s kant verandert naar inactief modus!
 
-warpdrive.accelerator.guide.lowPower_noStorage=Energie-opslagcapaciteit is te weinig; we hebben tenminste %1$d om verder te opereren maar we kunnen alleen %2$d opslaan
-warpdrive.accelerator.guide.lowPower_accelerating=We verliezen stroom baas, deeltjes vliegen in het rond, bereid je voor op grote bestraling!
-warpdrive.accelerator.guide.lowPower_noParticles=We hebben meer stroom nodig om de versneller te activeren!
-warpdrive.accelerator.guide.noChiller=Geen koeler gevonden voor deze versneller!
+warpdrive.accelerator.guide.low_power.not_enough_storage=Energie-opslagcapaciteit is te weinig; we hebben tenminste %1$d om verder te opereren maar we kunnen alleen %2$d opslaan
+warpdrive.accelerator.guide.low_power.accelerating=We verliezen stroom baas (%1$d > %2$d EU), deeltjes vliegen in het rond, bereid je voor op grote bestraling!
+warpdrive.accelerator.guide.low_power.no_particles=We hebben meer stroom nodig om de versneller te activeren!
+warpdrive.accelerator.guide.no_chiller=Geen koeler gevonden voor deze versneller!
 
 warpdrive.beam_frequency.tooltip=Straal-frequentie is gezet naar %1$d
 warpdrive.beam_frequency.get=Straal-frequentie %2$d is opgehaald door %1$s 
@@ -602,7 +602,7 @@ warpdrive.control_channel.status_line.valid=Controlekanaal %1$d is Geldig.
 warpdrive.control_channel.status_line.invalid=§cControlekanaal %1$d is incorrect.
 warpdrive.control_channel.status_line.undefined=§7Niet gedefinieerde controlekanaal.\n§bGebruik een Afstemmingsvork§r om deze te zetten.
 
-warpdrive.forcefield.guide.lowPower=we verliezen stroom kapitein, verminder onze consumptie of laat die schotse ingenieur onze stroomkracht vergroten!
+warpdrive.forcefield.guide.low_power=we verliezen stroom kapitein, verminder onze consumptie of laat die schotse ingenieur onze stroomkracht vergroten!
 
 warpdrive.forcefield.shape.status_line.none=§cVorm is niet gedefinieerd.
 warpdrive.forcefield.shape.status_line.double=Vorm is een volledig vorm %1$s
@@ -643,22 +643,22 @@ warpdrive.particle.antimatter.tooltip=Geproduceerd door de botsing van een aanta
 warpdrive.particle.strange_matter.name=rare materie
 warpdrive.particle.strange_matter.tooltip=Geproduceerd door de botsing van 2 wolkjes van deeltjes in de Superieure Versneller
 
-warpdrive.upgrade.result.noUpgradeToDismount=§cGeen upgrade om uit te schakelen
-warpdrive.upgrade.result.notEnoughUpgrades=§cJe hebt tenminste 1 item nodig om dit blok te upgraden.
-warpdrive.upgrade.result.invalidUpgrade=§cDid is niet het correcte item om dit blok te upgraden.
-warpdrive.upgrade.result.invalidProjectorUpgrade=§cDeze upgrade is te groot voor de projector, probeer een relais te gebruiken.
-warpdrive.upgrade.result.invalidRelayUpgrade=§cDeze upgrade kan alleen op projectors.
-warpdrive.upgrade.result.validUpgrades=Geldige upgrades voor dit block zijn: %1$s. @TODO nog niet ingebouwd
-warpdrive.upgrade.result.tooManyUpgrades=§cEr zijn al %1$d upgrades geinstalleert.
+warpdrive.upgrade.result.no_upgrade_to_dismount=§cGeen upgrade om uit te schakelen
+warpdrive.upgrade.result.not_enough_upgrades=§cJe hebt tenminste 1 item nodig om dit blok te upgraden.
+warpdrive.upgrade.result.invalid_upgrade=§cDid is niet het correcte item om dit blok te upgraden.
+warpdrive.upgrade.result.invalid_upgrade_for_projector=§cDeze upgrade is te groot voor de projector, probeer een relais te gebruiken.
+warpdrive.upgrade.result.invalid_upgrade_for_relay=§cDeze upgrade kan alleen op projectors.
+warpdrive.upgrade.result.valid_upgrades=Geldige upgrades voor dit block zijn: %1$s. @TODO nog niet ingebouwd
+warpdrive.upgrade.result.too_many_upgrades=§cEr zijn al %1$d upgrades geinstalleert.
 warpdrive.upgrade.result.dismounted=Upgrade %1$s is succesvol uitgeschakeld.
 warpdrive.upgrade.result.mounted=Upgrade %1$s is succesvol geplaatst.
 
-warpdrive.upgrade.result.wrongShapeSide=§cEr is geen elektromagnetische-projector aan deze kant.
-warpdrive.upgrade.result.noShapeToDismount=§cGeen vorm om uit te schakelen.
-warpdrive.upgrade.result.notEnoughShapes.double=§cJe hebt tenminste 2 items nodig om de vorm van een dubbelzijdige-projector te zetten.
-warpdrive.upgrade.result.notEnoughShapes.single=§cJe hebt tenminste 1 items nodig om de vorm van een eenzijdige-projector te zetten.
-warpdrive.upgrade.result.shapeDismounted=Vorm succesvol uitgeschakeld.
-warpdrive.upgrade.result.shapeMounted=Vorm succesvol geplaatst.
+warpdrive.upgrade.result.wrong_shape_side=§cEr is geen elektromagnetische-projector aan deze kant.
+warpdrive.upgrade.result.no_shape_to_dismount=§cGeen vorm om uit te schakelen.
+warpdrive.upgrade.result.not_enough_shapes.double=§cJe hebt tenminste 2 items nodig om de vorm van een dubbelzijdige-projector te zetten.
+warpdrive.upgrade.result.not_enough_shapes.single=§cJe hebt tenminste 1 items nodig om de vorm van een eenzijdige-projector te zetten.
+warpdrive.upgrade.result.shape_dismounted=Vorm succesvol uitgeschakeld.
+warpdrive.upgrade.result.shape_mounted=Vorm succesvol geplaatst.
 
 warpdrive.upgrade.status_line.none=§7Geen upgrade geinstalleerd.
 warpdrive.upgrade.status_line.valid=Geupgrade met1$s.
@@ -672,15 +672,15 @@ warpdrive.video_channel.status_line.invalid=§cVideokanaal %1$d is ongeldig.
 warpdrive.video_channel.status_line.not_loaded=§cVideokanaal %1$d is ongeldig of camera is te ver weg!
 warpdrive.video_channel.status_line.undefined=§7niet gedefinieerd videokanaal.\n§bGebruik een Afstemmingsvork§r om het te zetten.
 
-warpdrive.cloaking_core.missingInnerAndOuter=§cIntegrity down to %1$d%%: missing channeling coil(s) towards %2$s and projecting coil(s) towards %3$s
-warpdrive.cloaking_core.missingInner=§cIntegrity down to %1$d%%: missing channeling coil(s) towards %2$s
-warpdrive.cloaking_core.missingOuter=§cIntegrity down to %1$d%%: missing projecting coil(s) towards %2$s
+warpdrive.cloaking_core.missing_channeling_and_projecting_coils=§cIntegrity down to %1$d%%: missing channeling coil(s) towards %2$s and projecting coil(s) towards %3$s
+warpdrive.cloaking_core.missing_channeling_coils=§cIntegrity down to %1$d%%: missing channeling coil(s) towards %2$s
+warpdrive.cloaking_core.missing_projecting_coils=§cIntegrity down to %1$d%%: missing projecting coil(s) towards %2$s
 warpdrive.cloaking_core.disabled=Dekmantelveld is uitgeschakeld
-warpdrive.cloaking_core.lowPower=§cDekmantelveld is uit, We hebben meer stroom nodig kapitein!
+warpdrive.cloaking_core.low_power=§cDekmantelveld is uit, We hebben meer stroom nodig kapitein!
 warpdrive.cloaking_core.cloaking=Een Niveau %1$d dekmantelveld bedekt huidig %2$d blokken!
 
-warpdrive.ic2_reactor_laser_monitor.noReactor=Geen reactor gevonden!
-warpdrive.ic2_reactor_laser_monitor.multipleReactors=%1$d reactor(s) aangesloten.
+warpdrive.ic2_reactor_laser_monitor.no_reactor=Geen reactor gevonden!
+warpdrive.ic2_reactor_laser_monitor.reactor_found=Reactor connected on %1$s.
 
 warpdrive.transporter.status=Van (%1$.0f %2$.0f %3$.0f) naar (%4$.0f %5$.0f %6$.0f)
 warpdrive.transporter_beacon.status.invalid=§cNo transporter room linked

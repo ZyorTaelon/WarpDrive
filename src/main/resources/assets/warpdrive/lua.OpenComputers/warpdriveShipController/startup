@@ -117,7 +117,7 @@ function ship_boot()
     ship_shipSize = ship.getShipSize()
     w.sleep(0.05)
     timeout = timeout - 1
-  until ship_shipSize ~= nil or timeout < 0
+  until (ship_shipSize ~= nil and ship_shipSize ~= 0) or timeout < 0
   if timeout < 0 then
     w.setColorWarning()
     w.writeLn("failed")
@@ -239,35 +239,40 @@ function ship_warp()
 end
 
 function ship_page_setMovement()
+  -- force manual jump so we get proper max jump distance
+  ship.enable(false)
+  ship.command("MANUAL")
+  
+  local success, maxJumpDistance = ship.getMaxJumpDistance()
+  if success ~= true then
+    w.status_showWarning("" .. maxJumpDistance)
+    return
+  end
+  
   w.page_begin("<==== Set ship movement ====>")
-  w.setColorNormal()
   w.setCursorPos(1, 3)
+  w.setColorNormal()
   ship_writeMovement("Current movement is ")
   w.setCursorPos(1, 5)
   
-  ship_movement[1] = ship_page_setDistanceAxis(4, "Forward/back", "Forward", "Backward", ship_movement[1], math.abs(ship_front + ship_back + 1))
-  ship_movement[2] = ship_page_setDistanceAxis(6, "Up/down"     , "Up"     , "Down"    , ship_movement[2], math.abs(ship_up + ship_down + 1))
-  ship_movement[3] = ship_page_setDistanceAxis(8, "Right/left"  , "Right"  , "Left"    , ship_movement[3], math.abs(ship_left + ship_right + 1))
+  ship_movement[1] = ship_page_setDistanceAxis(4, "Forward/back", "Forward", "Backward", ship_movement[1], math.abs(ship_front + ship_back  + 1), maxJumpDistance)
+  ship_movement[2] = ship_page_setDistanceAxis(6, "Up/down"     , "Up"     , "Down"    , ship_movement[2], math.abs(ship_up    + ship_down  + 1), maxJumpDistance)
+  ship_movement[3] = ship_page_setDistanceAxis(8, "Right/left"  , "Right"  , "Left"    , ship_movement[3], math.abs(ship_left  + ship_right + 1), maxJumpDistance)
   ship_movement = { ship.movement(ship_movement[1], ship_movement[2], ship_movement[3]) }
   ship_updateMovementStats()
 end
 
-function ship_page_setDistanceAxis(line, axis, positive, negative, userEntry, shipLength)
-  local success, maxJumpDistance = ship.getMaxJumpDistance()
-  if success ~= true then
-    w.status_showSuccess("" .. maxJumpDistance)
-    maxJumpDistance = 0
-  end
+function ship_page_setDistanceAxis(line, axis, positive, negative, userEntry, shipLength, maxJumpDistance)
   local maximumDistance = math.floor(shipLength + maxJumpDistance)
-  w.setColorControl()
   w.setCursorPos(1, line + 2)
-  w.writeFullLine("Enter between " .. math.floor( shipLength + 1) .. " and " ..  maximumDistance .. " to move " ..  positive)
-  w.writeFullLine("Enter 0 to keep position on this axis")
-  w.writeFullLine("Enter between " .. -maximumDistance .. " and " .. math.floor(-shipLength - 1) .. " to move " ..  negative)
+  w.setColorHelp()
+  w.writeFullLine(" Enter between " .. math.floor( shipLength + 1) .. " and " ..  maximumDistance .. " to move " ..  positive .. ".")
+  w.writeFullLine(" Enter 0 to keep position on this axis.")
+  w.writeFullLine(" Enter between " .. -maximumDistance .. " and " .. math.floor(-shipLength - 1) .. " to move " ..  negative .. ".")
   
-  w.setColorNormal()
   repeat
     w.setCursorPos(1, line)
+    w.setColorNormal()
     w.write(axis .. " movement: ")
     userEntry = w.input_readInteger(userEntry)
     if userEntry ~= 0 and (math.abs(userEntry) <= shipLength or math.abs(userEntry) > maximumDistance) then
@@ -288,11 +293,11 @@ function ship_page_setRotation()
   local inputAbort = false
   local drun = true
   w.page_begin("<==== Set ship rotation ====>")
-  w.setCursorPos(1, 19)
-  w.setColorControl()
-  w.writeFullLine(" Select ship rotation (Up, Down, Left, Right)")
-  w.writeFullLine(" Select Front to keep current orientation")
-  w.writeFullLine(" Press Enter to save your selection")
+  w.setCursorPos(1, 11)
+  w.setColorHelp()
+  w.writeFullLine(" Select ship rotation (Up, Down, Left, Right).")
+  w.writeFullLine(" Select Front to keep current orientation.")
+  w.writeFullLine(" Press Enter to save your selection.")
   repeat
     w.setCursorPos(1, 3)
     w.setColorNormal()
@@ -332,11 +337,11 @@ end
 function ship_page_setDimensions()
   w.page_begin("<==== Set ship dimensions ====>")
   w.setCursorPos(1, 18)
-  w.setColorControl()
-  w.writeFullLine(" Enter ship size in blocks (0-9)")
-  w.writeFullLine(" First block next to Ship counts as 1")
-  w.writeFullLine(" Ship controller counts as 'Front = 1'")
-  w.writeFullLine(" Press Enter to save your selection")
+  w.setColorHelp()
+  w.writeFullLine(" Enter ship size in blocks (0-9).")
+  w.writeFullLine(" First block next to Ship counts as 1.")
+  w.writeFullLine(" Ship controller counts as 'Front = 1'.")
+  w.writeFullLine(" Press Enter to save your selection.")
   
   w.setCursorPos(1, 3)
   w.setColorNormal()
@@ -365,8 +370,8 @@ function ship_page_summon() -- no longer used
   if stringPlayers == nil or #arrayPlayers == 0 then
     w.writeLn("~ no players registered ~")
     w.writeLn("")
-    w.setColorControl()
-    w.writeFullLine("Press enter to exit")
+    w.setColorHelp()
+    w.writeFullLine(" Press enter to exit.")
     w.setColorNormal()
     w.input_readInteger("")
     return
@@ -374,9 +379,9 @@ function ship_page_summon() -- no longer used
   for i = 1, #arrayPlayers do
     w.writeLn(i .. ". " .. arrayPlayers[i])
   end
-  w.setColorControl()
-  w.writeFullLine("Enter player number")
-  w.writeFullLine("or press enter to summon everyone")
+  w.setColorHelp()
+  w.writeFullLine(" Enter player number")
+  w.writeFullLine(" or press enter to summon everyone.")
   w.setColorNormal()
   
   w.write(":")
@@ -397,9 +402,9 @@ function ship_page_jumpToGate()
   w.writeLn("Your ship should be already inside a jumpgate")
   
   w.setCursorPos(1, 20)
-  w.setColorControl()
-  w.writeFullLine("Enter target jumpgate name (a-z, 0-9)")
-  w.writeFullLine("Press enter to save jumpgate name")
+  w.setColorHelp()
+  w.writeFullLine(" Enter target jumpgate name (a-z, 0-9).")
+  w.writeFullLine(" Press enter to save jumpgate name.")
   
   w.setCursorPos(1, 5)
   w.setColorNormal()
@@ -551,7 +556,7 @@ function ship_page_crew()
   w.setCursorPos(1, 20)
   w.setColorControl()
   w.writeFullLine(" Summon all crew (S), Toggle summon after jump (T)")
-  w.writeFullLine(" select crew (arrows), summon selected crew (enter)")
+  w.writeFullLine(" select crew (Up, Down), summon selected crew (enter)")
 end
 
 function ship_key_crew(character, keycode)
@@ -608,7 +613,7 @@ function ship_page_navigation()
   
   w.setCursorPos(1, 20)
   w.setColorControl()
-  w.writeFullLine(" select target (arrows), register target (enter)")
+  w.writeFullLine(" select target (Up, Down), register target (enter)")
   w.writeFullLine(" jump through Gate (G)")
 end
 

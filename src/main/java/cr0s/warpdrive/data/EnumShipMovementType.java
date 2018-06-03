@@ -24,7 +24,7 @@ public enum EnumShipMovementType implements IStringSerializable {
 	// nota: empty names won't show up in the configuration file
 	
 	public final boolean hasConfiguration;
-	private final String unlocalizedName;
+	private final String name;
 	private final String description;
 	public final double[] maximumDistanceDefault;
 	public final double[] energyRequiredDefault;
@@ -43,14 +43,14 @@ public enum EnumShipMovementType implements IStringSerializable {
 		}
 	}
 	
-	EnumShipMovementType(final boolean hasConfiguration, final String unlocalizedName, final String description,
+	EnumShipMovementType(final boolean hasConfiguration, final String name, final String description,
 	                     final double[] maximumDistanceDefault,
 	                     final double[] energyRequiredDefault,
 	                     final double[] warmupDefault,
 	                     final double[] sicknessDefault,
 	                     final double[] cooldownDefault) {
 		this.hasConfiguration = hasConfiguration;
-		this.unlocalizedName = unlocalizedName;
+		this.name = name;
 		this.description = description;
 		this.maximumDistanceDefault = maximumDistanceDefault;
 		this.energyRequiredDefault = energyRequiredDefault;
@@ -65,7 +65,7 @@ public enum EnumShipMovementType implements IStringSerializable {
 	
 	@Nonnull
 	@Override
-	public String getName() { return unlocalizedName; }
+	public String getName() { return name; }
 	
 	@Nonnull
 	public String getDescription() { return description; }

@@ -153,7 +153,7 @@ public class BlockForceField extends BlockAbstractForceField implements IDamageR
 		ClientProxy.modelInitialisation(item);
 		
 		// register camouflage
-		for (Integer integer : FREQUENCY.getAllowedValues()) {
+		for (final Integer integer : FREQUENCY.getAllowedValues()) {
 			final String variant = String.format("%s=%d", FREQUENCY.getName(), integer);
 			ModelBakeEventHandler.registerBakedModel(new ModelResourceLocation(getRegistryName(), variant), BakedModelCamouflage.class);
 		}

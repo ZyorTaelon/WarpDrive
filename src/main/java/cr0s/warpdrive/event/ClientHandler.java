@@ -34,7 +34,7 @@ public class ClientHandler {
 			return;
 		}
 		if (Dictionary.ITEMS_BREATHING_HELMET.contains(event.getItemStack().getItem())) {
-			Commons.addTooltip(event.getToolTip(), new TextComponentTranslation("warpdrive.tooltip.item_tag.breathingHelmet").getFormattedText());
+			Commons.addTooltip(event.getToolTip(), new TextComponentTranslation("warpdrive.tooltip.item_tag.breathing_helmet").getFormattedText());
 		}
 		if (Dictionary.ITEMS_FLYINSPACE.contains(event.getItemStack().getItem())) {
 			Commons.addTooltip(event.getToolTip(), new TextComponentTranslation("warpdrive.tooltip.item_tag.flyInSpace").getFormattedText());

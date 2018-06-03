@@ -81,7 +81,8 @@ public class JumpShip {
 			jumpShip.jumpBlocks = new JumpBlock[width * height * length];
 			
 			// Read blocks and TileEntities from NBT to internal storage array
-			final NBTTagList localBlocks = (NBTTagList) schematic.getTag("Blocks");
+			final byte localBlocks[] = schematic.getByteArray("Blocks");
+			final byte localAddBlocks[] = schematic.hasKey("AddBlocks") ? schematic.getByteArray("AddBlocks") : null;
 			final byte localMetadata[] = schematic.getByteArray("Data");
 			
 			// Load Tile Entities
@@ -107,8 +108,26 @@ public class JumpShip {
 						jumpBlock.x = x;
 						jumpBlock.y = y;
 						jumpBlock.z = z;
-						jumpBlock.block = Block.getBlockFromName(localBlocks.getStringTagAt(index));
-						jumpBlock.blockMeta = (localMetadata[index]) & 0xFF;
+						
+						// rebuild block id from signed byte + nibble tables
+						int blockId = localBlocks[index];
+						if (blockId < 0) {
+							blockId += 256;
+						}
+						if (localAddBlocks != null) {
+							int MSB = localAddBlocks[index / 2];
+							if (MSB < 0) {
+								MSB += 256;
+							}
+							if (index % 2 == 0) {
+								blockId += (MSB & 0x0F) << 8;
+							} else {
+								blockId += (MSB & 0xF0) << 4;
+							}
+						}
+						
+						jumpBlock.block = Block.getBlockById(blockId);
+						jumpBlock.blockMeta = (localMetadata[index]) & 0x0F;
 						jumpBlock.blockNBT = tileEntities[index];
 						
 						if (jumpBlock.block != null) {
@@ -253,7 +272,8 @@ public class JumpShip {
 					final Block block = blockState.getBlock();
 					
 					// Skipping any air block & ignored blocks
-					if (worldObj.isAirBlock(blockPos) || Dictionary.BLOCKS_LEFTBEHIND.contains(block)) {
+					if ( worldObj.isAirBlock(blockPos)
+					  || Dictionary.BLOCKS_LEFTBEHIND.contains(block) ) {
 						continue;
 					}
 					

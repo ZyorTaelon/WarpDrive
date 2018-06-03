@@ -12,7 +12,7 @@ public enum EnumShipScannerState implements IStringSerializable {
 	DEPLOYING     (2, "online");         // Deploying a ship
 	
 	private final int metadata;
-	private final String unlocalizedName;
+	private final String name;
 	
 	// cached values
 	public static final int length;
@@ -25,9 +25,9 @@ public enum EnumShipScannerState implements IStringSerializable {
 		}
 	}
 	
-	EnumShipScannerState(final int metadata, final String unlocalizedName) {
+	EnumShipScannerState(final int metadata, final String name) {
 		this.metadata = metadata;
-		this.unlocalizedName = unlocalizedName;
+		this.name = name;
 	}
 	
 	public int getMetadata() {
@@ -40,5 +40,5 @@ public enum EnumShipScannerState implements IStringSerializable {
 	
 	@Nonnull
 	@Override
-	public String getName() { return unlocalizedName; }
+	public String getName() { return name; }
 }

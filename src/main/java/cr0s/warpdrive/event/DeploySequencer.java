@@ -54,7 +54,7 @@ public class DeploySequencer extends JumpSequencer {
 			// Warn owner if deployment done but wait next tick for teleportation
 			final EntityPlayerMP entityPlayerMP = Commons.getOnlinePlayerByName(playerName);
 			if (entityPlayerMP != null) {
-				Commons.addChatMessage(entityPlayerMP, new TextComponentString("Ship complete. Teleporting captain to the main deck"));
+				Commons.addChatMessage(entityPlayerMP, new TextComponentString("Ship deployed. Teleporting captain to the main deck"));
 			}
 		}
 	}

@@ -9,6 +9,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
 
 public enum EnumReactorFace implements IStringSerializable {
+	
 	//                tier           inst name         facing             x   y   z  propertyLaser
 	UNKNOWN          (null          , -1, "unknown"  , null            ,  0,  0,  0, null            ),
 	BASIC_NORTH      (EnumTier.BASIC,  0, "north"    , EnumFacing.NORTH,  0,  0, -2, EnumFacing.SOUTH),

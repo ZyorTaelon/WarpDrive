@@ -14,14 +14,14 @@ for _, side in pairs(sides) do
 end
 
 
-if cloakingcore == nil or cloakingcore.interfaced() == nil then
+if cloakingCore == nil or cloakingCore.interfaced() == nil then
   term.setBackgroundColor(colors.red)
   term.setTextColor(colors.white)
   term.write("No cloaking core detected")
 else
   cloakingCore.tier(1)
   cloakingCore.enable(true)
-  local isValid, message = cloakingCore.isAssemblyValid() 
+  local isValid, message = cloakingCore.isAssemblyValid()
   if isValid then
     term.setBackgroundColor(colors.lime)
     term.setTextColor(colors.blue)

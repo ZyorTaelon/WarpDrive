@@ -47,14 +47,14 @@ function lhc_boot(isDetailed)
         lhc_controlChannels[controlChannel] = "true"
         countParameters = countParameters + 1
      elseif isDetailed then
-        w.setColorWarning();
+        w.setColorWarning()
         w.writeLn("Error " .. x)
-        w.setColorNormal();
+        w.setColorNormal()
         w.sleep(0.5)
       end
     end
   elseif isDetailed then
-    w.setColorWarning();
+    w.setColorWarning()
     w.writeLn("No control point detected!")
     w.sleep(0.5)
   end
@@ -85,24 +85,24 @@ function lhc_boot(isDetailed)
         lhc_parameters[index] = { controlChannel, isEnabled, threshold, description }
         index = index + 1
       elseif isDetailed then
-        w.setColorWarning();
+        w.setColorWarning()
         if controlChannelCheck ~= nil then
           w.writeLn("Error " .. controlChannelCheck)
         else
           w.writeLn("Error nil?")
         end
         w.sleep(0.5)
-        w.setColorNormal();
+        w.setColorNormal()
       end
       if controlChannel ~= controlChannelCheck and isDetailed then
-        w.setColorWarning();
+        w.setColorWarning()
         w.writeLn("Error: requested " .. controlChannel .. ", received " .. controlChannelCheck)
         w.sleep(0.5)
-        w.setColorNormal();
+        w.setColorNormal()
       end
     end
   elseif isDetailed then
-    w.setColorWarning();
+    w.setColorWarning()
     w.writeLn("No control channel detected!")
     w.sleep(0.5)
   end
@@ -127,18 +127,42 @@ function lhc_page_parameter()
       end
     end
   end
+  
   w.writeLn("")
+  
+  local _, y = w.getCursorPos()
+  -- description
+  w.setCursorPos(1, y + 3)
+  w.setColorHelp()
+  w.writeFullLine(" Press enter to validate.")
+  
+  w.setCursorPos(1, y)
+  w.setColorNormal()
   w.writeLn("Current description is '" .. description .. "'")
   w.write("Enter a description: ")
   description = w.input_readText(description)
   
-  w.writeLn("")
+  w.setCursorPos(1, y + 3)
+  w.setColorNormal()
+  w.writeFullLine(" ")
+  
+  -- threshold
+  w.setCursorPos(1, y + 7)
+  w.setColorHelp()
+  w.writeFullLine(" Press enter to validate.")
+  
+  w.setCursorPos(1, y + 4)
+  w.setColorNormal()
   w.writeLn("Current threshold is " .. w.format_integer(threshold * 100) .. "%")
   w.write("Enter parameter threshold: ")
   local new_threshold = w.input_readInteger(threshold * 100) / 100
   threshold = math.min(2.0, math.max(0.0, new_threshold))
   lhc_parameters[indexSelected] = { controlChannel, isEnabled, threshold, description }
   accelerator.parameter(controlChannel, isEnabled, threshold, description)
+  
+  w.setCursorPos(1, y + 7)
+  w.setColorNormal()
+  w.writeFullLine(" ")
 end
 
 lhc_parameter_indexSelected = 1
@@ -212,45 +236,45 @@ function lhc_page()
     
     w.write(" Controller is ")
     if isEnabled then
-      w.setColorGood();
+      w.setColorGood()
       w.writeLn("Enabled")
     else
-      w.setColorBad();
+      w.setColorBad()
       w.writeLn("Disabled")
     end
     
     local energy, energyMax = accelerator.energy()
     if energy == nil then energy = 0 end
     if energyMax == nil or energyMax == 0 then energyMax = 1 end
-    w.setColorNormal();
+    w.setColorNormal()
     w.write(" Energy level is ")
     if isPowered then
-      w.setColorGood();
+      w.setColorGood()
     elseif isEnabled then
-      w.setColorBad();
+      w.setColorBad()
     else
-      w.setColorDisabled();
+      w.setColorDisabled()
     end
     w.writeLn(math.floor(energy / energyMax * 100) .. " % (" .. energy .. " EU)")
     -- w.writeLn("")
     
-    w.setColorNormal();
+    w.setColorNormal()
     w.write(" Magnets temperature is ")
     if temperatureCurrent_K <= temperatureTarget_K then
-      w.setColorGood();
+      w.setColorGood()
     elseif isEnabled then
-      w.setColorBad();
+      w.setColorBad()
     else
-      w.setColorDisabled();
+      w.setColorDisabled()
     end
     w.write(string.format("%.1f K", math.floor(temperatureCurrent_K * 10) / 10))
-    w.setColorNormal();
+    w.setColorNormal()
     w.writeLn(". Target is " .. temperatureTarget_K .. " K")
     -- w.writeLn("")
     
     w.write("Parameters: ")
     if #lhc_parameters == 0 then
-      w.setColorDisabled();
+      w.setColorDisabled()
       w.writeLn("")
       w.writeCentered("   -no valid node detected-")
     else

@@ -45,6 +45,12 @@ public abstract class TileEntityAbstractLaser extends TileEntityAbstractInterfac
 	}
 	
 	@Override
+	protected void onFirstUpdateTick() {
+		super.onFirstUpdateTick();
+		updateLaserMediumDirection();
+	}
+	
+	@Override
 	public void update() {
 		super.update();
 		

@@ -35,7 +35,7 @@ public class EntityFXBeam extends Particle {
 	
 	public EntityFXBeam(final World world, final Vector3 position, final Vector3 target,
 	                    final float red, final float green, final float blue,
-	                    final int age, final int energy) {
+	                    final int age) {
 		super(world, position.x, position.y, position.z, 0.0D, 0.0D, 0.0D);
 		this.setRBGColorF(red, green, blue);
 		this.setSize(0.02F, 0.02F);

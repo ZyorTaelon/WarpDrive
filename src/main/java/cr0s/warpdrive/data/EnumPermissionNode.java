@@ -1,16 +1,20 @@
 package cr0s.warpdrive.data;
 
+import net.minecraft.util.IStringSerializable;
+
+import javax.annotation.Nonnull;
 import java.util.HashMap;
 
-public enum EnumPermissionNode {
-	NONE               ("None"),
-	ENABLE             ("Enable"),
-	OPEN_GUI           ("OpenGUI"),
-	MODIFY             ("Modify"),
-	SNEAK_THROUGH      ("SneakThrough"),
+public enum EnumPermissionNode implements IStringSerializable {
+	
+	NONE               ("none"),
+	ENABLE             ("enable"),
+	OPEN_GUI           ("open_gui"),
+	MODIFY             ("modify"),
+	SNEAK_THROUGH      ("sneak_through"),
 	;
 	
-	public final String unlocalizedName;
+	public final String name;
 	
 	// cached values
 	public static final int length;
@@ -23,11 +27,17 @@ public enum EnumPermissionNode {
 		}
 	}
 	
-	EnumPermissionNode(final String unlocalizedName) {
-		this.unlocalizedName = unlocalizedName;
+	EnumPermissionNode(final String name) {
+		this.name = name;
 	}
 	
 	public static EnumPermissionNode get(final int id) {
 		return ID_MAP.get(id);
+	}
+	
+	@Nonnull
+	@Override
+	public String getName() {
+		return name;
 	}
 }

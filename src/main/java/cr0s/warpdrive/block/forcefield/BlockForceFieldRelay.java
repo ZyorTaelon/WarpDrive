@@ -124,7 +124,7 @@ public class BlockForceFieldRelay extends BlockAbstractForceField {
 				
 			} else {
 				// no more upgrades to dismount
-				Commons.addChatMessage(entityPlayer, new TextComponentTranslation("warpdrive.upgrade.result.noUpgradeToDismount"));
+				Commons.addChatMessage(entityPlayer, new TextComponentTranslation("warpdrive.upgrade.result.no_upgrade_to_dismount"));
 				return true;
 			}
 			
@@ -136,7 +136,7 @@ public class BlockForceFieldRelay extends BlockAbstractForceField {
 			// validate type
 			if (EnumForceFieldUpgrade.get(itemStackHeld.getItemDamage()).maxCountOnRelay <= 0) {
 				// invalid upgrade type
-				Commons.addChatMessage(entityPlayer, new TextComponentTranslation("warpdrive.upgrade.result.invalidRelayUpgrade"));
+				Commons.addChatMessage(entityPlayer, new TextComponentTranslation("warpdrive.upgrade.result.invalid_upgrade_for_relay"));
 				return true;
 			}
 			
@@ -144,7 +144,7 @@ public class BlockForceFieldRelay extends BlockAbstractForceField {
 				// validate quantity
 				if (itemStackHeld.stackSize < 1) {
 					// not enough upgrade items
-					Commons.addChatMessage(entityPlayer, new TextComponentTranslation("warpdrive.upgrade.result.notEnoughUpgrades"));
+					Commons.addChatMessage(entityPlayer, new TextComponentTranslation("warpdrive.upgrade.result.not_enough_upgrades"));
 					return true;
 				}
 				

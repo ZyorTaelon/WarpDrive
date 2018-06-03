@@ -23,6 +23,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 
 public abstract class TileEntityAbstractMiner extends TileEntityAbstractLaser {
+	
 	// machine type
 	protected EnumFacing laserOutputSide = EnumFacing.NORTH;
 	
@@ -37,8 +38,8 @@ public abstract class TileEntityAbstractMiner extends TileEntityAbstractLaser {
 	}
 	
 	@Override
-	public void validate() {
-		super.validate();
+	protected void onFirstUpdateTick() {
+		super.onFirstUpdateTick();
 		laserOutput = new Vector3(this).translate(0.5D).translate(laserOutputSide, 0.5D);
 	}
 	

@@ -52,6 +52,7 @@ public class AcceleratorSetup extends GlobalPosition {
 	public final HashMap<VectorI, Byte> chillers = new HashMap<>();
 	public final Set<TileEntityEnergyBank> energyBanks = new HashSet<>();
 	public final int energy_maxStorage;
+	public final Set<VectorI> setJammed = new HashSet<>();
 	public final TreeMap<Integer, VectorI> mapInjectors = new TreeMap<>();
 	public final Integer[] keyInjectors;
 	public final ArrayList<TrajectoryPoint> listColliders = new ArrayList<>();
@@ -288,10 +289,10 @@ public class AcceleratorSetup extends GlobalPosition {
 			
 			// count main magnets
 			final int indexTier = (trajectoryPoint.type & TrajectoryPoint.MASK_TIERS) - 1;
-			if ((trajectoryPoint.type & TrajectoryPoint.MAGNETS_HORIZONTAL) != 0) {
+			if ((trajectoryPoint.type & TrajectoryPoint.MAGNETS_HORIZONTAL) != 0 && indexTier >= 0) {
 				countMagnets[indexTier] += 2;
 			}
-			if ((trajectoryPoint.type & TrajectoryPoint.MAGNETS_VERTICAL) != 0) {
+			if ((trajectoryPoint.type & TrajectoryPoint.MAGNETS_VERTICAL) != 0 && indexTier >= 0) {
 				countMagnets[indexTier] += 2;
 			}
 			
@@ -309,6 +310,11 @@ public class AcceleratorSetup extends GlobalPosition {
 	private void computeVectorArrays(final WorldServer world) {
 		// check for chillers, injectors and colliders blocks
 		for (final TrajectoryPoint trajectoryPoint : trajectoryAccelerator.values()) {
+			// check for invalid setup
+			if (trajectoryPoint.isJammed()) {
+				setJammed.add(trajectoryPoint);
+			}
+			
 			// check for injectors
 			VectorI vectorToAdd = trajectoryPoint.clone(trajectoryPoint.directionForward.getOpposite());
 			final Block blockForward = vectorToAdd.getBlock(world);

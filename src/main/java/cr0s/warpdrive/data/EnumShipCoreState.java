@@ -15,7 +15,7 @@ public enum EnumShipCoreState implements IStringSerializable {
 	COOLING_DOWN  (5, "cooling_down");   // Pending cooldown
 	
 	private final int metadata;
-	private final String unlocalizedName;
+	private final String name;
 	
 	// cached values
 	public static final int length;
@@ -28,9 +28,9 @@ public enum EnumShipCoreState implements IStringSerializable {
 		}
 	}
 	
-	EnumShipCoreState(final int metadata, final String unlocalizedName) {
+	EnumShipCoreState(final int metadata, final String name) {
 		this.metadata = metadata;
-		this.unlocalizedName = unlocalizedName;
+		this.name = name;
 	}
 	
 	public int getMetadata() {
@@ -43,5 +43,5 @@ public enum EnumShipCoreState implements IStringSerializable {
 	
 	@Nonnull
 	@Override
-	public String getName() { return unlocalizedName; }
+	public String getName() { return name; }
 }

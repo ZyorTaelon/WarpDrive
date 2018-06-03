@@ -11,7 +11,7 @@ public enum EnumDecorativeType implements IStringSerializable {
 	ENERGIZED          ("energized"),
 	NETWORK            ("network");
 	
-	private final String unlocalizedName;
+	private final String name;
 	
 	// cached values
 	public static final int length;
@@ -24,19 +24,17 @@ public enum EnumDecorativeType implements IStringSerializable {
 		}
 	}
 	
-	EnumDecorativeType(final String unlocalizedName) {
-		this.unlocalizedName = unlocalizedName;
+	EnumDecorativeType(final String name) {
+		this.name = name;
 	}
 	
 	public static EnumDecorativeType get(final int damage) {
 		return ID_MAP.get(damage);
 	}
-
-	public String getUnlocalizedName() {
-		return unlocalizedName;
-	}
 	
 	@Nonnull
 	@Override
-	public String getName() { return unlocalizedName; }
+	public String getName() {
+	 return name;
+	}
 }

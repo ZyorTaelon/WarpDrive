@@ -55,6 +55,7 @@ local styles = {
   good     = { front = colors.lime     , back = colors.lightGray },
   bad      = { front = colors.red      , back = colors.lightGray },
   disabled = { front = colors.gray     , back = colors.lightGray },
+  help     = { front = colors.white    , back = colors.blue      },
   header   = { front = colors.orange   , back = colors.black     },
   control  = { front = colors.white    , back = colors.blue      },
   selected = { front = colors.black    , back = colors.lightBlue },
@@ -421,8 +422,8 @@ local function input_readInteger(currentValue)
   term.setCursorBlink(true)
   repeat
     w.status_tick()
-    w.setColorNormal()
     w.setCursorPos(x, y)
+    w.setColorNormal()
     w.write(input .. "            ")
     input = string.sub(input, -9)
     w.setCursorPos(x + #input, y)
@@ -526,8 +527,8 @@ local function input_readText(currentValue)
   repeat
     w.status_tick()
     -- update display clearing extra characters
-    w.setColorNormal()
     w.setCursorPos(x, y)
+    w.setColorNormal()
     w.write(w.format_string(input, 37))
     -- truncate input and set caret position
     input = string.sub(input, -36)
@@ -646,8 +647,8 @@ local function input_readEnum(currentValue, list, toValue, toDescription, noValu
   term.setCursorBlink(true)
   repeat
     w.status_tick()
-    w.setColorNormal()
     w.setCursorPos(x, y)
+    w.setColorNormal()
     if #list == 0 then
       inputKey = nil
     end
@@ -671,8 +672,8 @@ local function input_readEnum(currentValue, list, toValue, toDescription, noValu
     end
     w.setColorNormal()
     w.write(input .. "                                                  ")
-    w.setColorDisabled()
     w.setCursorPos(1, y + 1)
+    w.setColorDisabled()
     w.write(inputDescription .. "                                                  ")
     
     local params = { event.pull() }
@@ -904,7 +905,11 @@ local function data_setName()
   
   -- ask for a new name
   w.page_begin("<==== Set " .. component .. " name ====>")
-  w.writeLn("")
+  w.setCursorPos(1, 4)
+  w.setColorHelp()
+  w.writeFullLine(" Press enter to validate.")
+  w.setCursorPos(1, 3)
+  w.setColorNormal()
   w.write("Enter " .. component .. " name: ")
   data_name = w.input_readText(data_name)
   
@@ -962,7 +967,7 @@ local function data_register(name, callbackRead, callbackSave, callbackName)
     callbackSave = function() end
   end
   
-  -- name callback is nill when not defined
+  -- name callback is nil when not defined
   
   data_handlers[name] = { read = callbackRead, save = callbackSave, name = callbackName }
 end

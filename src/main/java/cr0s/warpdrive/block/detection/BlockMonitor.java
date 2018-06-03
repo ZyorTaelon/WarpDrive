@@ -2,6 +2,7 @@ package cr0s.warpdrive.block.detection;
 
 import cr0s.warpdrive.Commons;
 import cr0s.warpdrive.WarpDrive;
+import cr0s.warpdrive.api.IVideoChannel;
 import cr0s.warpdrive.block.BlockAbstractRotatingContainer;
 import cr0s.warpdrive.data.CameraRegistryItem;
 import cr0s.warpdrive.render.ClientCameraHandler;
@@ -53,22 +54,31 @@ public class BlockMonitor extends BlockAbstractRotatingContainer {
 			final TileEntity tileEntity = world.getTileEntity(blockPos);
 			
 			if (tileEntity instanceof TileEntityMonitor) {
+				// validate video channel
 				final int videoChannel = ((TileEntityMonitor) tileEntity).getVideoChannel();
-				final CameraRegistryItem camera = WarpDrive.cameras.getCameraByVideoChannel(world, videoChannel);
-				if (camera == null || entityPlayer.isSneaking()) {
+				if ( videoChannel < IVideoChannel.VIDEO_CHANNEL_MIN
+				  || videoChannel > IVideoChannel.VIDEO_CHANNEL_MAX ) {
 					Commons.addChatMessage(entityPlayer, ((TileEntityMonitor) tileEntity).getStatus());
 					return true;
-				} else {
-					Commons.addChatMessage(entityPlayer, new TextComponentTranslation("warpdrive.monitor.viewingCamera",
-							videoChannel,
-							camera.position.getX(),
-							camera.position.getY(),
-							camera.position.getZ() ));
-					ClientCameraHandler.setupViewpoint(
-							camera.type, entityPlayer, entityPlayer.rotationYaw, entityPlayer.rotationPitch,
-							blockPos, blockState,
-							camera.position, world.getBlockState(camera.position));
 				}
+				
+				// validate camera
+				final CameraRegistryItem camera = WarpDrive.cameras.getCameraByVideoChannel(world, videoChannel);
+				if ( camera == null
+				  || entityPlayer.isSneaking() ) {
+					Commons.addChatMessage(entityPlayer, ((TileEntityMonitor) tileEntity).getStatus());
+					return true;
+				}
+				
+				Commons.addChatMessage(entityPlayer, new TextComponentTranslation("warpdrive.monitor.viewing_camera",
+						videoChannel,
+						camera.position.getX(),
+						camera.position.getY(),
+						camera.position.getZ() ));
+				ClientCameraHandler.setupViewpoint(
+						camera.type, entityPlayer, entityPlayer.rotationYaw, entityPlayer.rotationPitch,
+						blockPos, blockState,
+						camera.position, world.getBlockState(camera.position));
 			}
 		}
 		

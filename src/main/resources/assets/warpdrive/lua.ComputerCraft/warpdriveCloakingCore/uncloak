@@ -14,7 +14,7 @@ for _, side in pairs(sides) do
 end
 
 
-if cloakingcore == nil or cloakingcore.interfaced() == nil then
+if cloakingCore == nil or cloakingCore.interfaced() == nil then
   term.setBackgroundColor(colors.red)
   term.setTextColor(colors.white)
   term.write("No cloaking core detected")

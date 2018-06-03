@@ -6,12 +6,13 @@ import java.util.HashMap;
 import net.minecraft.util.IStringSerializable;
 
 public enum EnumReactorReleaseMode implements IStringSerializable {
-	OFF        ("OFF"),
-	UNLIMITED  ("MANUAL"),
-	ABOVE      ("ABOVE"),
-	AT_RATE    ("RATE");
 	
-	private final String unlocalizedName;
+	OFF        ("off"),
+	UNLIMITED  ("unlimited"),
+	ABOVE      ("above"),
+	AT_RATE    ("at_rate");
+	
+	private final String name;
 	
 	// cached values
 	public static final int length;
@@ -24,19 +25,15 @@ public enum EnumReactorReleaseMode implements IStringSerializable {
 		}
 	}
 	
-	EnumReactorReleaseMode(final String unlocalizedName) {
-		this.unlocalizedName = unlocalizedName;
+	EnumReactorReleaseMode(final String name) {
+		this.name = name;
 	}
 	
 	public static EnumReactorReleaseMode get(final int ordinal) {
 		return ID_MAP.get(ordinal);
 	}
 	
-	public String getUnlocalizedName() {
-		return unlocalizedName;
-	}
-	
 	@Nonnull
 	@Override
-	public String getName() { return unlocalizedName; }
+	public String getName() { return name; }
 }

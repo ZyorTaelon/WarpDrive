@@ -6,12 +6,13 @@ import javax.annotation.Nonnull;
 import java.util.HashMap;
 
 public enum EnumLiftMode implements IStringSerializable {
+	
 	INACTIVE			("inactive"),
 	UP					("up"),
 	DOWN				("down"),
 	REDSTONE			("redstone");
 	
-	private final String unlocalizedName;
+	private final String name;
 	
 	// cached values
 	public static final int length;
@@ -24,19 +25,15 @@ public enum EnumLiftMode implements IStringSerializable {
 		}
 	}
 	
-	EnumLiftMode(final String unlocalizedName) {
-		this.unlocalizedName = unlocalizedName;
+	EnumLiftMode(final String name) {
+		this.name = name;
 	}
 	
 	public static EnumLiftMode get(final int damage) {
 		return ID_MAP.get(damage);
 	}
 	
-	public String getUnlocalizedName() {
-		return unlocalizedName;
-	}
-	
 	@Nonnull
 	@Override
-	public String getName() { return unlocalizedName; }
+	public String getName() { return name; }
 }

@@ -33,30 +33,31 @@ public class TileEntityForceField extends TileEntityAbstractBase {
 	@Override
 	public void readFromNBT(final NBTTagCompound tagCompound) {
 		super.readFromNBT(tagCompound);
-		if (tagCompound.hasKey("projector")) {
+		if (tagCompound.hasKey("projector")) {// are we server side and is it a valid force field block?
 			vProjector = VectorI.createFromNBT(tagCompound.getCompoundTag("projector"));
 			cache_beamFrequency = tagCompound.getInteger(IBeamFrequency.BEAM_FREQUENCY_TAG);
-			if (tagCompound.hasKey("camouflageBlock")) {
-				try {
-					cache_blockStateCamouflage = Block.getBlockFromName(tagCompound.getString("camouflageBlock")).getStateFromMeta(tagCompound.getByte("camouflageMeta"));
-					cache_colorMultiplierCamouflage = tagCompound.getInteger("camouflageColorMultiplier");
-					cache_lightCamouflage = tagCompound.getByte("camouflageLight");
-					if (Dictionary.BLOCKS_NOCAMOUFLAGE.contains(cache_blockStateCamouflage.getBlock())) {
-						cache_blockStateCamouflage = null;
-						cache_colorMultiplierCamouflage = 0;
-						cache_lightCamouflage = 0;
-					}
-				} catch (final Exception exception) {
-					exception.printStackTrace();
+		} else {
+			vProjector = null;
+			cache_beamFrequency = -1;
+		}
+		if (tagCompound.hasKey("camouflage")) {
+			final NBTTagCompound nbtCamouflage = tagCompound.getCompoundTag("camouflage");
+			try {
+				cache_blockStateCamouflage = Block.getBlockFromName(nbtCamouflage.getString("block")).getStateFromMeta(nbtCamouflage.getByte("meta"));
+				cache_colorMultiplierCamouflage = nbtCamouflage.getInteger("color");
+				cache_lightCamouflage = nbtCamouflage.getByte("light");
+				if (Dictionary.BLOCKS_NOCAMOUFLAGE.contains(cache_blockStateCamouflage.getBlock())) {
+					cache_blockStateCamouflage = null;
+					cache_colorMultiplierCamouflage = 0;
+					cache_lightCamouflage = 0;
 				}
-			} else {
+			} catch (final Exception exception) {
+				exception.printStackTrace();
 				cache_blockStateCamouflage = null;
 				cache_colorMultiplierCamouflage = 0;
 				cache_lightCamouflage = 0;
 			}
 		} else {
-			vProjector = null;
-			cache_beamFrequency = -1;
 			cache_blockStateCamouflage = null;
 			cache_colorMultiplierCamouflage = 0;
 			cache_lightCamouflage = 0;
@@ -71,10 +72,12 @@ public class TileEntityForceField extends TileEntityAbstractBase {
 			tagCompound.setTag("projector", vProjector.writeToNBT(new NBTTagCompound()));
 			tagCompound.setInteger(IBeamFrequency.BEAM_FREQUENCY_TAG, cache_beamFrequency);
 			if (cache_blockStateCamouflage != null) {
-				tagCompound.setString("camouflageBlock", cache_blockStateCamouflage.getBlock().getRegistryName().toString());
-				tagCompound.setByte("camouflageMeta", (byte) cache_blockStateCamouflage.getBlock().getMetaFromState(cache_blockStateCamouflage));
-				tagCompound.setInteger("camouflageColorMultiplier", cache_colorMultiplierCamouflage);
-				tagCompound.setByte("camouflageLight", (byte) cache_lightCamouflage);
+				final NBTTagCompound nbtCamouflage = new NBTTagCompound();
+				nbtCamouflage.setString("block", cache_blockStateCamouflage.getBlock().getRegistryName().toString());
+				nbtCamouflage.setByte("meta", (byte) cache_blockStateCamouflage.getBlock().getMetaFromState(cache_blockStateCamouflage));
+				nbtCamouflage.setInteger("color", cache_colorMultiplierCamouflage);
+				nbtCamouflage.setByte("light", (byte) cache_lightCamouflage);
+				tagCompound.setTag("camouflage", nbtCamouflage);
 			}
 		}
 		return tagCompound;
@@ -84,6 +87,10 @@ public class TileEntityForceField extends TileEntityAbstractBase {
 	@Override
 	public NBTTagCompound getUpdateTag() {
 		final NBTTagCompound tagCompound = writeToNBT(super.getUpdateTag());
+		
+		tagCompound.removeTag("projector");
+		tagCompound.removeTag(IBeamFrequency.BEAM_FREQUENCY_TAG);
+		
 		return tagCompound;
 	}
 	

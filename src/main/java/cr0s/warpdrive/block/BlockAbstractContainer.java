@@ -281,7 +281,7 @@ public abstract class BlockAbstractContainer extends BlockContainer implements I
 				
 				if (enumComponentType == null) {
 					// no more upgrades to dismount
-					Commons.addChatMessage(entityPlayer, new TextComponentTranslation("warpdrive.upgrade.result.noUpgradeToDismount"));
+					Commons.addChatMessage(entityPlayer, new TextComponentTranslation("warpdrive.upgrade.result.no_upgrade_to_dismount"));
 					return true;
 				}
 				
@@ -310,13 +310,13 @@ public abstract class BlockAbstractContainer extends BlockContainer implements I
 			// validate type
 			if (tileEntityAbstractBase.getUpgradeMaxCount(enumComponentType) <= 0) {
 				// invalid upgrade type
-				Commons.addChatMessage(entityPlayer, new TextComponentTranslation("warpdrive.upgrade.result.invalidUpgrade"));
+				Commons.addChatMessage(entityPlayer, new TextComponentTranslation("warpdrive.upgrade.result.invalid_upgrade"));
 				return true;
 			}
 			if (!tileEntityAbstractBase.canUpgrade(enumComponentType)) {
 				// too many upgrades
-				Commons.addChatMessage(entityPlayer, new TextComponentTranslation("warpdrive.upgrade.result.tooManyUpgrades",
-				                                                                  tileEntityAbstractBase.getUpgradeMaxCount(enumComponentType)));
+				Commons.addChatMessage(entityPlayer, new TextComponentTranslation("warpdrive.upgrade.result.too_many_upgrades",
+				                                                                             tileEntityAbstractBase.getUpgradeMaxCount(enumComponentType)));
 				return true;
 			}
 			
@@ -324,7 +324,7 @@ public abstract class BlockAbstractContainer extends BlockContainer implements I
 				// validate quantity
 				if (itemStackHeld.stackSize < 1) {
 					// not enough upgrade items
-					Commons.addChatMessage(entityPlayer, new TextComponentTranslation("warpdrive.upgrade.result.notEnoughUpgrades"));
+					Commons.addChatMessage(entityPlayer, new TextComponentTranslation("warpdrive.upgrade.result.not_enough_upgrades"));
 					return true;
 				}
 				

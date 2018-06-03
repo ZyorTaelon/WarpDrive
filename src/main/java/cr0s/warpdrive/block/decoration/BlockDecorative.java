@@ -19,6 +19,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class BlockDecorative extends BlockAbstractBase {
+	
 	public static final PropertyEnum<EnumDecorativeType> TYPE = PropertyEnum.create("type", EnumDecorativeType.class);
 	private static ItemStack[] itemStackCache;
 	

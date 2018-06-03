@@ -304,7 +304,7 @@ public class StarMapRegistry {
 		final int radius2 = radius * radius;
 		for (final Map.Entry<Integer, CopyOnWriteArraySet<StarMapRegistryItem>> entryDimension : registry.entrySet()) {
 			for (final StarMapRegistryItem starMapRegistryItem : entryDimension.getValue()) {
-				if (starMapRegistryItem.type == EnumStarMapEntryType.ACCELERATOR) {
+				if (!starMapRegistryItem.type.hasRadarEcho()) {
 					continue;
 				}
 				final Vector3 vectorItem = starMapRegistryItem.getUniversalCoordinates(tileEntity.getWorld().isRemote);
@@ -392,6 +392,13 @@ public class StarMapRegistry {
 				continue;
 			}
 			
+			// Compare areas for intersection
+			final AxisAlignedBB aabb2 = new AxisAlignedBB(registryItem.minX, registryItem.minY, registryItem.minZ,
+			                                              registryItem.maxX, registryItem.maxY, registryItem.maxZ);
+			if (!aabb1.intersectsWith(aabb2)) {
+				continue;
+			}
+			
 			// Skip missing ship cores
 			final TileEntity tileEntity = core.getWorld().getTileEntity(new BlockPos(registryItem.x, registryItem.y, registryItem.z));
 			if (!(tileEntity instanceof TileEntityShipCore)) {
@@ -409,18 +416,15 @@ public class StarMapRegistry {
 				continue;
 			}
 			
-			// Compare areas for intersection
-			final AxisAlignedBB aabb2 = new AxisAlignedBB(registryItem.minX, registryItem.minY, registryItem.minZ,
-			                                              registryItem.maxX, registryItem.maxY, registryItem.maxZ);
-			if (aabb1.intersectsWith(aabb2)) {
-				return true;
-			}
+			// ship is intersecting, online and valid
+			return true;
 		}
 		
 		return false;
 	}
 	
 	// do not call during tileEntity construction (readFromNBT and validate)
+	private static boolean isExceptionReported = false;
 	private void cleanup() {
 		LocalProfiler.start("Starmap registry cleanup");
 		
@@ -442,6 +446,12 @@ public class StarMapRegistry {
 							final Chunk chunk = chunkProviderServer.id2ChunkMap.get(ChunkPos.chunkXZ2Int(registryItem.x >> 4, registryItem.z >> 4));
 							isLoaded = chunk != null && chunk.isLoaded();
 						} catch (final NoSuchFieldError exception) {
+							if (!isExceptionReported) {
+								WarpDrive.logger.info(String.format("Unable to check non-loaded chunks for star map entry %s",
+								                                    registryItem));
+								exception.printStackTrace();
+								isExceptionReported = true;
+							}
 							isLoaded = chunkProviderServer.chunkExists(registryItem.x >> 4, registryItem.z >> 4);
 						}
 					} else {
@@ -449,6 +459,10 @@ public class StarMapRegistry {
 					}
 					// skip unloaded chunks
 					if (!isLoaded) {
+						if (WarpDrive.isDev) {
+							WarpDrive.logger.info(String.format("Skipping non-loaded star map entry %s",
+							                                    registryItem));
+						}
 						continue;
 					}
 					
@@ -458,38 +472,41 @@ public class StarMapRegistry {
 					final TileEntity tileEntity = world.getTileEntity(new BlockPos(registryItem.x, registryItem.y, registryItem.z));
 					isValid = true;
 					switch (registryItem.type) {
-						case UNDEFINED:
-							break;
-						case SHIP:
-							isValid = block == WarpDrive.blockShipCore && tileEntity != null && !tileEntity.isInvalid();
-							break;
-						case JUMPGATE:
-							break;
-						case PLANET:
-							break;
-						case STAR:
-							break;
-						case STRUCTURE:
-							break;
-						case WARP_ECHO:
-							break;
-						case ACCELERATOR:
-							isValid = block == WarpDrive.blockAcceleratorController && tileEntity != null && !tileEntity.isInvalid();
-							break;
-						default:
-							break;
+					case UNDEFINED:
+						break;
+					case SHIP:
+						isValid = block == WarpDrive.blockShipCore && tileEntity != null && !tileEntity.isInvalid();
+						break;
+					case JUMPGATE:
+						break;
+					case PLANET:
+						break;
+					case STAR:
+						break;
+					case STRUCTURE:
+						break;
+					case WARP_ECHO:
+						break;
+					case ACCELERATOR:
+						isValid = block == WarpDrive.blockAcceleratorController && tileEntity != null && !tileEntity.isInvalid();
+						break;
+					case TRANSPORTER:
+						isValid = block == WarpDrive.blockTransporterCore && tileEntity != null && !tileEntity.isInvalid();
+						break;
+					default:
+						break;
 					}
 				}
 				
 				if (!isValid) {
-					if (WarpDriveConfig.LOGGING_STARMAP) {
+					// if (WarpDriveConfig.LOGGING_STARMAP) {
 						if (registryItem == null) {
 							WarpDrive.logger.info("Cleaning up starmap object ~null~");
 						} else {
 							WarpDrive.logger.info("Cleaning up starmap object " + registryItem.type + " at "
 							                      + registryItem.dimensionId + " " + registryItem.x + " " + registryItem.y + " " + registryItem.z);
 						}
-					}
+					// }
 					countRemove++;
 					entryDimension.getValue().remove(registryItem);
 				}

@@ -7,6 +7,7 @@ import cr0s.warpdrive.block.TileEntityAbstractEnergy;
 import cr0s.warpdrive.config.Dictionary;
 import cr0s.warpdrive.config.ShipMovementCosts;
 import cr0s.warpdrive.config.WarpDriveConfig;
+import cr0s.warpdrive.data.BlockProperties;
 import cr0s.warpdrive.data.CelestialObjectManager;
 import cr0s.warpdrive.data.EnumShipControllerCommand;
 import cr0s.warpdrive.data.EnumShipCoreState;
@@ -18,7 +19,6 @@ import cr0s.warpdrive.data.Vector3;
 import cr0s.warpdrive.data.VectorI;
 import cr0s.warpdrive.event.JumpSequencer;
 import cr0s.warpdrive.render.EntityFXBoundingBox;
-import cr0s.warpdrive.world.SpaceTeleporter;
 
 import javax.annotation.Nonnull;
 import java.lang.ref.WeakReference;
@@ -49,7 +49,6 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 
-import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -135,7 +134,13 @@ public class TileEntityShipCore extends TileEntityAbstractEnergy implements ISta
 			}
 			return;
 		}
+		
 		TileEntityShipController tileEntityShipController = tileEntityShipControllerWeakReference == null ? null : tileEntityShipControllerWeakReference.get();
+		if (tileEntityShipController != null
+		    && tileEntityShipController.isInvalid()) {
+			tileEntityShipControllerWeakReference = null;
+			tileEntityShipController = null;
+		}
 		
 		// Always cooldown
 		if (cooldownTime_ticks > 0) {
@@ -165,11 +170,6 @@ public class TileEntityShipCore extends TileEntityAbstractEnergy implements ISta
 			}
 		}
 		
-		// Refresh rendering
-		if (getBlockMetadata() != stateCurrent.getMetadata()) {
-			updateMetadata(stateCurrent.getMetadata());
-		}
-		
 		// accelerate update ticks during boot
 		if (bootTicks > 0) {
 			bootTicks--;
@@ -189,6 +189,9 @@ public class TileEntityShipCore extends TileEntityAbstractEnergy implements ISta
 			WarpDrive.starMap.updateInRegistry(this);
 			
 			final TileEntityShipController tileEntityShipControllerNew = findControllerBlock();
+			if (tileEntityShipControllerNew == null) {
+				tileEntityShipControllerWeakReference = null;
+			}
 			if (tileEntityShipControllerNew != tileEntityShipController) {
 				tileEntityShipController = tileEntityShipControllerNew;
 				tileEntityShipControllerWeakReference = new WeakReference<>(tileEntityShipController);
@@ -200,8 +203,13 @@ public class TileEntityShipCore extends TileEntityAbstractEnergy implements ISta
 		if (logTicks <= 0) {
 			logTicks = LOG_INTERVAL_TICKS;
 			if (WarpDriveConfig.LOGGING_JUMP) {
-				WarpDrive.logger.info(this + " controller is " + tileEntityShipController + ", warmupTime " + warmupTime_ticks + ", stateCurrent " + stateCurrent + ", jumpFlag "
-						+ (tileEntityShipController == null ? "NA" : tileEntityShipController.isEnabled) + ", cooldownTime " + cooldownTime_ticks);
+				WarpDrive.logger.info(String.format("%s %s, jumpFlag %s from %s, warmup %d, cooldown %d",
+				                                    this,
+				                                    stateCurrent,
+				                                    tileEntityShipController == null ? "NA" : tileEntityShipController.isEnabled,
+				                                    tileEntityShipController,
+				                                    warmupTime_ticks,
+				                                    cooldownTime_ticks));
 			}
 		}
 		
@@ -211,6 +219,12 @@ public class TileEntityShipCore extends TileEntityAbstractEnergy implements ISta
 			isolationUpdateTicks = WarpDriveConfig.SHIP_CORE_ISOLATION_UPDATE_INTERVAL_SECONDS * 20;
 			updateIsolationState();
 		}
+		
+		// Refresh rendering
+		final boolean isActive = stateCurrent != EnumShipCoreState.DISCONNECTED
+		                      && tileEntityShipController != null
+		                      && commandCurrent != EnumShipControllerCommand.OFFLINE;
+		updateBlockState(null, BlockProperties.ACTIVE, isActive);
 		
 		if (tileEntityShipController == null) {
 			return;
@@ -412,7 +426,9 @@ public class TileEntityShipCore extends TileEntityAbstractEnergy implements ISta
 			return false;
 		}
 		final TileEntityShipController tileEntityShipController = tileEntityShipControllerWeakReference.get();
-		return tileEntityShipController != null && tileEntityShipController.getCommand() == EnumShipControllerCommand.OFFLINE;
+		return tileEntityShipController != null
+		    && !tileEntityShipController.isInvalid()
+		    && tileEntityShipController.getCommand() == EnumShipControllerCommand.OFFLINE;
 	}
 	
 	protected boolean isAttached(final TileEntityShipController tileEntityShipControllerExpected) {
@@ -458,6 +474,54 @@ public class TileEntityShipCore extends TileEntityAbstractEnergy implements ISta
 			stringBuilderResult.append(((EntityPlayer) object).getName());
 		}
 		return stringBuilderResult.toString();
+	}
+	
+	public boolean isBooting() {
+		if (bootTicks > 0) {
+			return true;
+		}
+		
+		if (tileEntityShipControllerWeakReference == null) {// not attached
+			return false;
+		}
+		
+		final TileEntityShipController tileEntityShipController = tileEntityShipControllerWeakReference.get();
+		if ( tileEntityShipController == null
+		  || tileEntityShipController.isInvalid() ) {// we're desync
+			// force a refresh
+			registryUpdateTicks = 0;
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public String getFirstOnlineCrew() {
+		if (tileEntityShipControllerWeakReference == null) {// not attached
+			return null;
+		}
+		
+		final TileEntityShipController tileEntityShipController = tileEntityShipControllerWeakReference.get();
+		if ( tileEntityShipController == null
+		  || tileEntityShipController.isInvalid() ) {// we're desync
+			// force a refresh
+			registryUpdateTicks = 0;
+			return "-busy-";
+		}
+		
+		if (tileEntityShipController.players == null || tileEntityShipController.players.isEmpty()) {// no crew defined
+			return null;
+		}
+		
+		for (final String namePlayer : tileEntityShipController.players) {
+			final EntityPlayer entityPlayer = Commons.getOnlinePlayerByName(namePlayer);
+			if (entityPlayer != null) {// crew member is online
+				return namePlayer;
+			}
+		}
+		
+		// all cleared
+		return null;
 	}
 	
 	private void updateIsolationState() {
@@ -629,19 +693,7 @@ public class TileEntityShipCore extends TileEntityAbstractEnergy implements ISta
 	
 	private void summonPlayer(final EntityPlayerMP player, final BlockPos blockPos) {
 		if (energy_consume(WarpDriveConfig.SHIP_TELEPORT_ENERGY_PER_ENTITY, false)) {
-			if (player.dimension != worldObj.provider.getDimension()) {
-				player.mcServer.getPlayerList().transferPlayerToDimension(
-					player,
-					worldObj.provider.getDimension(),
-					new SpaceTeleporter(
-						DimensionManager.getWorld(worldObj.provider.getDimension()),
-						0,
-						MathHelper.floor_double(player.posX), MathHelper.floor_double(player.posY), MathHelper.floor_double(player.posZ)));
-				player.setPositionAndUpdate(blockPos.getX() + 0.5d, blockPos.getY(), blockPos.getZ() + 0.5d);
-				player.sendPlayerAbilities();
-			} else {
-				player.setPositionAndUpdate(blockPos.getX() + 0.5d, blockPos.getY(), blockPos.getZ() + 0.5d);
-			}
+			Commons.moveEntity(player, worldObj, new Vector3(blockPos.getX() + 0.5D, blockPos.getY(), blockPos.getZ() + 0.5D));
 		}
 	}
 	
@@ -1042,9 +1094,10 @@ public class TileEntityShipCore extends TileEntityAbstractEnergy implements ISta
 	
 	@Override
 	public ITextComponent getStatus() {
+		final String strIsolationRate = String.format("%.1f", isolationRate * 100.0D);
 		return super.getStatus()
 			.appendSibling((cooldownTime_ticks > 0) ? new TextComponentString("\n").appendSibling(new TextComponentTranslation("warpdrive.ship.status_line.cooling", cooldownTime_ticks / 20)) : new TextComponentString(""))
-			.appendSibling((isolationBlocksCount > 0) ? new TextComponentString("\n").appendSibling(new TextComponentTranslation("warpdrive.ship.status_line.isolation", isolationBlocksCount, isolationRate * 100.0)) : new TextComponentString(""));
+			.appendSibling((isolationBlocksCount > 0) ? new TextComponentString("\n").appendSibling(new TextComponentTranslation("warpdrive.ship.status_line.isolation", isolationBlocksCount, strIsolationRate)) : new TextComponentString(""));
 	}
 	
 	public ITextComponent getBoundingBoxStatus() {

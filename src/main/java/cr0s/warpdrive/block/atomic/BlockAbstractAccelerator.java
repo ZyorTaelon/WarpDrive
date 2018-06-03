@@ -25,11 +25,6 @@ public class BlockAbstractAccelerator extends BlockAbstractBase implements IBloc
 	}
 	
 	@Override
-	public int damageDropped(IBlockState blockState) {
-		return 0;
-	}
-	
-	@Override
 	public byte getTier(final ItemStack itemStack) {
 		return tier;
 	}

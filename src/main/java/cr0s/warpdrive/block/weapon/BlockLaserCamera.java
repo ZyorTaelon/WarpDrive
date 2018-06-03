@@ -57,7 +57,7 @@ public class BlockLaserCamera extends BlockAbstractContainer {
 					Commons.addChatMessage(entityPlayer, ((TileEntityLaserCamera) tileEntity).getStatus());
 				} else {
 					Commons.addChatMessage(entityPlayer, Commons.getChatPrefix(this)
-						.appendSibling(new TextComponentTranslation("warpdrive.error.badTileEntity")));
+						.appendSibling(new TextComponentTranslation("warpdrive.error.bad_tile_entity")));
 					WarpDrive.logger.error("Block " + this + " with invalid tile entity " + tileEntity);
 				}
 				return false;

@@ -54,9 +54,6 @@ import cr0s.warpdrive.block.movement.BlockTransporterBeacon;
 import cr0s.warpdrive.block.movement.BlockTransporterContainment;
 import cr0s.warpdrive.block.movement.BlockTransporterCore;
 import cr0s.warpdrive.block.movement.BlockTransporterScanner;
-import cr0s.warpdrive.block.decoration.BlockBedrockGlass;
-import cr0s.warpdrive.block.decoration.BlockDecorative;
-import cr0s.warpdrive.block.decoration.BlockGas;
 import cr0s.warpdrive.block.passive.BlockHighlyAdvancedMachine;
 import cr0s.warpdrive.block.passive.BlockIridium;
 import cr0s.warpdrive.block.weapon.BlockLaserCamera;
@@ -130,7 +127,6 @@ import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.EnumHelper;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -470,34 +466,6 @@ public class WarpDrive {
 		}
 		
 		proxy.onForgePreInitialisation();
-		
-		if (event.getSide().isClient()) {
-			creativeTabWarpDrive.setBackgroundImageName("items.png");
-			
-			MinecraftForge.EVENT_BUS.register(new RenderOverlayAir());
-			MinecraftForge.EVENT_BUS.register(new RenderOverlayCamera());
-			MinecraftForge.EVENT_BUS.register(new RenderOverlayLocation());
-			
-			MinecraftForge.EVENT_BUS.register(new ClientCameraHandler());
-			
-			// @TODO MC1.10 force field rendering
-			/*
-			RenderBlockStandard.renderId = RenderingRegistry.getNextAvailableRenderId();
-			RenderingRegistry.registerBlockHandler(RenderBlockStandard.instance);
-			
-			RenderBlockForceField.renderId = RenderingRegistry.getNextAvailableRenderId();
-			RenderingRegistry.registerBlockHandler(RenderBlockForceField.instance);
-			
-			RenderBlockOmnipanel.renderId = RenderingRegistry.getNextAvailableRenderId();
-			RenderingRegistry.registerBlockHandler(RenderBlockOmnipanel.instance);
-			
-			RenderBlockShipScanner.renderId = RenderingRegistry.getNextAvailableRenderId();
-			RenderingRegistry.registerBlockHandler(RenderBlockShipScanner.instance);
-			
-			RenderBlockTransporterBeacon.renderId = RenderingRegistry.getNextAvailableRenderId();
-			RenderingRegistry.registerBlockHandler(RenderBlockTransporterBeacon.instance);
-			/**/
-		}
 	}
 	
 	@EventHandler

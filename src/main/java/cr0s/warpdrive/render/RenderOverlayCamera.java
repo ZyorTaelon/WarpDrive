@@ -34,10 +34,10 @@ public class RenderOverlayCamera {
 		try {
 			final String strHelp;
 			if (ClientCameraHandler.overlayType == EnumCameraType.SIMPLE_CAMERA) {
-				minecraft.getTextureManager().bindTexture(new ResourceLocation("warpdrive", "textures/blocks/detection/cameraOverlay.png"));
+				minecraft.getTextureManager().bindTexture(new ResourceLocation("warpdrive", "textures/blocks/detection/camera-overlay.png"));
 				strHelp = "Left click to zoom / Right click to exit";
 			} else {
-				minecraft.getTextureManager().bindTexture(new ResourceLocation("warpdrive", "textures/blocks/weapon/laserCameraOverlay.png"));
+				minecraft.getTextureManager().bindTexture(new ResourceLocation("warpdrive", "textures/blocks/weapon/laser_camera-overlay.png"));
 				strHelp = "Left click to zoom / Right click to exit / Space to fire";
 			}
 			

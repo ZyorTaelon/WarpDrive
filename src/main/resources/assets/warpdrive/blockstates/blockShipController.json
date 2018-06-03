@@ -1,0 +1,54 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"model": "minecraft:cube_bottom_top",
+		"textures": {
+			"side"  : "warpdrive:blocks/movement/ship_controller-side_inactive",
+			"bottom": "warpdrive:blocks/movement/ship_controller-bottom",
+			"top"   : "warpdrive:blocks/movement/ship_controller-top"
+		},
+		"transform": "forge:default-block"
+	},
+	"variants": {
+		"normal": [{}],
+		"inventory": [{}],
+		"command": {
+			"offline": {},
+			"idle": {
+				"textures": {
+					"side"  : "warpdrive:blocks/movement/ship_controller-side_active0"
+				}
+			},
+			"manual": {
+				"textures": {
+					"side"  : "warpdrive:blocks/movement/ship_controller-side_active1"
+				}
+			},
+			"autopilot": {
+				"textures": {
+					"side"  : "warpdrive:blocks/movement/ship_controller-side_active2"
+				}
+			},
+			"summon": {
+				"textures": {
+					"side"  : "warpdrive:blocks/movement/ship_controller-side_active3"
+				}
+			},
+			"hyperdrive": {
+				"textures": {
+					"side"  : "warpdrive:blocks/movement/ship_controller-side_active4"
+				}
+			},
+			"gate": {
+				"textures": {
+					"side"  : "warpdrive:blocks/movement/ship_controller-side_active5"
+				}
+			},
+			"maintenance": {
+				"textures": {
+					"side"  : "warpdrive:blocks/movement/ship_controller-side_active7"
+				}
+			}
+		}
+	}
+}

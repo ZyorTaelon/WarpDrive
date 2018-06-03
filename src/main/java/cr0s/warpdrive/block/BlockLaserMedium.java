@@ -23,7 +23,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockLaserMedium extends BlockAbstractContainer {
-  
+	
 	public static final PropertyInteger LEVEL = PropertyInteger.create("level", 0, 7);
 	
 	public BlockLaserMedium(final String registryName) {
